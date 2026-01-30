@@ -25,7 +25,8 @@
         "content/utils/pokemon.js",
         "content/core/state.js",
         "content/core/calculator.js",
-        "content/ui/overlay-ui.js",
+        "content/ui/styles.js",
+        "content/ui/overlay.js",
         "content/main.js"
       ],
       "run_at": "document_idle"
