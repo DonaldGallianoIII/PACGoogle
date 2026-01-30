@@ -9,16 +9,26 @@
 
   // Store CSS as a string for injection
   PAC.UI.CSS = `
+
+      /* Viewport Scaling System
+       * Base: 1vmin ≈ 10.8px at 1080p
+       * Scale factor adjusts all sizes proportionally
+       */
+      :root {
+        --pac-scale: 1; /* Adjust this to scale entire UI (0.8 = smaller, 1.2 = larger) */
+        --pac-base: calc(1vmin * var(--pac-scale));
+      }
+
       #pac-calc-overlay {
         position: fixed;
-        top: 20px;
-        right: 20px;
-        width: 380px;
-        max-height: calc(100vh - 40px);
+        top: 1.9vmin;
+        right: 1.9vmin;
+        width: 35.2vmin;
+        max-height: calc(100vh - 3.7vmin);
         background: rgba(26, 26, 46, 0.96);
         border: 2px solid #0f3460;
-        border-radius: 12px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        border-radius: 1.1vmin;
+        box-shadow: 0 0.7vmin 3.0vmin rgba(0,0,0,0.4);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: #e9e9e9;
         z-index: 999999;
@@ -26,9 +36,9 @@
         overflow: visible;
         display: flex;
         flex-direction: column;
-        min-height: 200px;
-        min-width: 280px;
-        max-width: 600px;
+        min-height: 18.5vmin;
+        min-width: 25.9vmin;
+        max-width: 55.6vmin;
       }
       
       /* Hide side panels when width is not default */
@@ -55,16 +65,16 @@
       }
       
       /* Corner handles */
-      .pac-resize-nw { top: -6px; left: -6px; width: 16px; height: 16px; cursor: nw-resize; }
-      .pac-resize-ne { top: -6px; right: -6px; width: 16px; height: 16px; cursor: ne-resize; }
-      .pac-resize-sw { bottom: -6px; left: -6px; width: 16px; height: 16px; cursor: sw-resize; }
-      .pac-resize-se { bottom: -6px; right: -6px; width: 16px; height: 16px; cursor: se-resize; }
+      .pac-resize-nw { top: -0.6vmin; left: -0.6vmin; width: 1.5vmin; height: 1.5vmin; cursor: nw-resize; }
+      .pac-resize-ne { top: -0.6vmin; right: -0.6vmin; width: 1.5vmin; height: 1.5vmin; cursor: ne-resize; }
+      .pac-resize-sw { bottom: -0.6vmin; left: -0.6vmin; width: 1.5vmin; height: 1.5vmin; cursor: sw-resize; }
+      .pac-resize-se { bottom: -0.6vmin; right: -0.6vmin; width: 1.5vmin; height: 1.5vmin; cursor: se-resize; }
       
       /* Edge handles */
-      .pac-resize-n { top: -6px; left: 20px; right: 20px; height: 12px; cursor: n-resize; }
-      .pac-resize-s { bottom: -6px; left: 20px; right: 20px; height: 12px; cursor: s-resize; }
-      .pac-resize-w { left: -6px; top: 20px; bottom: 20px; width: 12px; cursor: w-resize; }
-      .pac-resize-e { right: -6px; top: 20px; bottom: 20px; width: 12px; cursor: e-resize; }
+      .pac-resize-n { top: -0.6vmin; left: 1.9vmin; right: 1.9vmin; height: 1.1vmin; cursor: n-resize; }
+      .pac-resize-s { bottom: -0.6vmin; left: 1.9vmin; right: 1.9vmin; height: 1.1vmin; cursor: s-resize; }
+      .pac-resize-w { left: -0.6vmin; top: 1.9vmin; bottom: 1.9vmin; width: 1.1vmin; cursor: w-resize; }
+      .pac-resize-e { right: -0.6vmin; top: 1.9vmin; bottom: 1.9vmin; width: 1.1vmin; cursor: e-resize; }
       
       /* Hide handles when minimized */
       #pac-calc-overlay.minimized .pac-resize-handle {
@@ -73,8 +83,8 @@
       
       #pac-calc-header {
         background: linear-gradient(90deg, #0f3460 0%, #533483 100%);
-        padding: 12px 16px;
-        border-radius: 10px 10px 0 0;
+        padding: 1.1vmin 1.5vmin;
+        border-radius: 0.9vmin 0.9vmin 0 0;
         cursor: move;
         display: flex;
         justify-content: space-between;
@@ -86,40 +96,40 @@
       
       #pac-calc-title {
         font-weight: 600;
-        font-size: 16px;
+        font-size: clamp(11px, 1.5vmin, 21px);
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 0.7vmin;
       }
       
       .pac-status-dot {
-        width: 10px;
-        height: 10px;
+        width: 0.9vmin;
+        height: 0.9vmin;
         border-radius: 50%;
         background: #666;
-        box-shadow: 0 0 8px rgba(255,255,255,0.3);
+        box-shadow: 0 0 0.7vmin rgba(255,255,255,0.3);
         transition: all 0.3s ease;
       }
       
       .pac-status-dot.connected {
         background: #4caf50;
-        box-shadow: 0 0 12px rgba(76,175,80,0.6);
+        box-shadow: 0 0 1.1vmin rgba(76,175,80,0.6);
       }
       
       #pac-calc-controls {
         display: flex;
-        gap: 8px;
+        gap: 0.7vmin;
       }
       
       .pac-ctrl-btn {
         background: rgba(255,255,255,0.1);
         border: none;
         color: #fff;
-        width: 28px;
-        height: 28px;
-        border-radius: 6px;
+        width: 2.6vmin;
+        height: 2.6vmin;
+        border-radius: 0.6vmin;
         cursor: pointer;
-        font-size: 18px;
+        font-size: clamp(12px, 1.7vmin, 23px);
         line-height: 1;
         transition: all 0.2s;
       }
@@ -153,10 +163,10 @@
         overflow-x: auto;
         overflow-y: hidden;
         white-space: nowrap;
-        padding: 8px;
+        padding: 0.7vmin;
         background: rgba(0,0,0,0.3);
         border-bottom: 1px solid rgba(255,255,255,0.1);
-        gap: 6px;
+        gap: 0.6vmin;
         scrollbar-width: none;
         -ms-overflow-style: none;
       }
@@ -171,10 +181,10 @@
       
       .pac-synergy-btn {
         flex-shrink: 0;
-        padding: 4px 10px;
+        padding: 0.37vmin 0.9vmin;
         border: 1px solid rgba(255,255,255,0.3);
-        border-radius: 12px;
-        font-size: 11px;
+        border-radius: 1.1vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 500;
         cursor: pointer;
         transition: all 0.15s;
@@ -226,9 +236,9 @@
       /* Mono-Type Panel */
       .pac-mono-panel {
         display: none;
-        margin: 8px 0;
+        margin: 0.7vmin 0;
         background: rgba(0,0,0,0.3);
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         overflow: hidden;
       }
       .pac-mono-panel.visible {
@@ -238,7 +248,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 8px 12px;
+        padding: 0.7vmin 1.1vmin;
         cursor: pointer;
         background: rgba(255,255,255,0.05);
         transition: background 0.2s;
@@ -249,20 +259,20 @@
       .pac-mono-header-title {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 0.7vmin;
         font-weight: 600;
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
       }
       .pac-mono-arrow {
         transition: transform 0.2s;
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
       }
       .pac-mono-panel.expanded .pac-mono-arrow {
         transform: rotate(90deg);
       }
       .pac-mono-content {
         display: none;
-        padding: 8px;
+        padding: 0.7vmin;
       }
       .pac-mono-panel.expanded .pac-mono-content {
         display: block;
@@ -270,14 +280,14 @@
       .pac-mono-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 4px;
+        gap: 0.37vmin;
       }
       .pac-mono-btn {
-        padding: 6px 4px;
+        padding: 0.6vmin 0.37vmin;
         border: none;
-        border-radius: 4px;
+        border-radius: 0.37vmin;
         cursor: pointer;
-        font-size: 9px;
+        font-size: clamp(9px, 0.8vmin, 11px);
         font-weight: 600;
         text-transform: uppercase;
         transition: all 0.15s;
@@ -289,14 +299,14 @@
       }
       .pac-mono-btn.selected {
         opacity: 1;
-        box-shadow: 0 0 0 2px #fff, 0 0 8px rgba(255,255,255,0.5);
+        box-shadow: 0 0 0 2px #fff, 0 0 0.7vmin rgba(255,255,255,0.5);
       }
       .pac-mono-status {
         text-align: center;
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #888;
-        padding: 4px;
-        margin-top: 4px;
+        padding: 0.37vmin;
+        margin-top: 0.37vmin;
       }
       .pac-mono-status.active {
         color: #4caf50;
@@ -304,13 +314,13 @@
       }
       .pac-mono-clear {
         width: 100%;
-        margin-top: 8px;
-        padding: 6px;
+        margin-top: 0.7vmin;
+        padding: 0.6vmin;
         background: rgba(239, 68, 68, 0.3);
         border: 1px solid rgba(239, 68, 68, 0.5);
-        border-radius: 4px;
+        border-radius: 0.37vmin;
         color: #fff;
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         cursor: pointer;
         transition: all 0.15s;
       }
@@ -322,18 +332,18 @@
       .pac-mono-wheel-section {
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-top: 10px;
-        padding-top: 10px;
+        gap: 0.7vmin;
+        margin-top: 0.9vmin;
+        padding-top: 0.9vmin;
         border-top: 1px solid rgba(255,255,255,0.1);
       }
       .pac-mono-spin-btn {
-        padding: 8px 16px;
+        padding: 0.7vmin 1.5vmin;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border: none;
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         color: #fff;
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s;
@@ -342,7 +352,7 @@
       }
       .pac-mono-spin-btn:hover {
         transform: scale(1.05);
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 0.37vmin 1.4vmin rgba(102, 126, 234, 0.4);
       }
       .pac-mono-spin-btn:disabled {
         opacity: 0.5;
@@ -351,9 +361,9 @@
       }
       .pac-mono-wheel-display {
         flex: 1;
-        height: 36px;
+        height: 3.3vmin;
         background: rgba(0,0,0,0.4);
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -361,11 +371,11 @@
         position: relative;
       }
       .pac-mono-wheel-type {
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         font-weight: 700;
         text-transform: uppercase;
-        padding: 4px 12px;
-        border-radius: 4px;
+        padding: 0.37vmin 1.1vmin;
+        border-radius: 0.37vmin;
         transition: all 0.1s;
       }
       .pac-mono-wheel-type.spinning {
@@ -376,7 +386,7 @@
         50% { transform: scale(1.1); }
       }
       .pac-mono-wheel-label {
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #888;
         text-align: center;
       }
@@ -390,11 +400,11 @@
         justify-content: center;
         z-index: 10000;
         cursor: not-allowed;
-        font-size: 32px;
+        font-size: clamp(22px, 3.0vmin, 42px);
         color: #fff;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        text-shadow: 0 2px 0.37vmin rgba(0,0,0,0.8);
         pointer-events: all;
-        border-radius: 8px;
+        border-radius: 0.7vmin;
       }
       
       /* Random Draft challenge styles */
@@ -406,24 +416,24 @@
         justify-content: center;
         z-index: 10000;
         cursor: not-allowed;
-        font-size: 36px;
+        font-size: clamp(24px, 3.3vmin, 46px);
         color: #fff;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        text-shadow: 0 2px 0.37vmin rgba(0,0,0,0.8);
         pointer-events: all;
-        border-radius: 8px;
+        border-radius: 0.7vmin;
       }
       
       .pac-draft-spin-highlight {
         position: fixed;
         pointer-events: none;
         z-index: 9998;
-        border-radius: 8px;
-        border: 5px solid #fbbf24;
+        border-radius: 0.7vmin;
+        border: 0.46vmin solid #fbbf24;
         background: rgba(251, 191, 36, 0.4);
         box-shadow: 
-          0 0 30px #fbbf24,
-          0 0 60px #fbbf24,
-          inset 0 0 30px rgba(251, 191, 36, 0.3);
+          0 0 2.8vmin #fbbf24,
+          0 0 5.6vmin #fbbf24,
+          inset 0 0 2.8vmin rgba(251, 191, 36, 0.3);
         transition: all 0.08s ease-out;
       }
       
@@ -431,23 +441,23 @@
         position: fixed;
         pointer-events: none;
         z-index: 9997;
-        border-radius: 8px;
-        border: 5px solid #22c55e;
+        border-radius: 0.7vmin;
+        border: 0.46vmin solid #22c55e;
         background: rgba(34, 197, 94, 0.35);
         box-shadow: 
-          0 0 25px #22c55e,
-          0 0 50px #22c55e,
-          inset 0 0 25px rgba(34, 197, 94, 0.25);
+          0 0 2.3vmin #22c55e,
+          0 0 4.6vmin #22c55e,
+          inset 0 0 2.3vmin rgba(34, 197, 94, 0.25);
         animation: draftChosenPulse 1.5s ease-in-out infinite;
       }
       
       @keyframes draftChosenPulse {
         0%, 100% { 
-          box-shadow: 0 0 25px #22c55e, 0 0 50px #22c55e, inset 0 0 25px rgba(34, 197, 94, 0.25);
+          box-shadow: 0 0 2.3vmin #22c55e, 0 0 4.6vmin #22c55e, inset 0 0 2.3vmin rgba(34, 197, 94, 0.25);
           border-color: #22c55e;
         }
         50% { 
-          box-shadow: 0 0 35px #4ade80, 0 0 70px #4ade80, inset 0 0 35px rgba(74, 222, 128, 0.35);
+          box-shadow: 0 0 3.2vmin #4ade80, 0 0 6.5vmin #4ade80, inset 0 0 3.2vmin rgba(74, 222, 128, 0.35);
           border-color: #4ade80;
         }
       }
@@ -468,7 +478,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 8px 12px;
+        padding: 0.7vmin 1.1vmin;
         background: rgba(255,255,255,0.05);
         transition: background 0.2s;
       }
@@ -478,7 +488,7 @@
       }
       
       .pac-draft-header-title {
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         font-weight: 600;
         color: #fbbf24;
       }
@@ -487,9 +497,9 @@
         background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
         border: none;
         color: #fff;
-        padding: 6px 14px;
-        border-radius: 4px;
-        font-size: 11px;
+        padding: 0.6vmin 1.3vmin;
+        border-radius: 0.37vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s;
@@ -497,7 +507,7 @@
       
       .pac-draft-toggle:hover {
         transform: scale(1.05);
-        box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
+        box-shadow: 0 2px 0.7vmin rgba(34, 197, 94, 0.4);
       }
       
       .pac-draft-toggle.active {
@@ -505,15 +515,15 @@
       }
       
       .pac-draft-toggle.active:hover {
-        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+        box-shadow: 0 2px 0.7vmin rgba(239, 68, 68, 0.4);
       }
       
       .pac-draft-status {
-        margin-top: 8px;
-        padding: 8px;
+        margin-top: 0.7vmin;
+        padding: 0.7vmin;
         background: rgba(34, 197, 94, 0.15);
-        border-radius: 6px;
-        font-size: 11px;
+        border-radius: 0.6vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #86efac;
         text-align: center;
         display: none;
@@ -532,17 +542,17 @@
         justify-content: center;
         z-index: 10000;
         cursor: not-allowed;
-        font-size: 28px;
+        font-size: clamp(19px, 2.6vmin, 36px);
         color: #fff;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        text-shadow: 0 2px 0.37vmin rgba(0,0,0,0.8);
         pointer-events: all;
-        border-radius: 8px;
+        border-radius: 0.7vmin;
         flex-direction: column;
         gap: 2px;
       }
       
       .pac-copycat-blocker-text {
-        font-size: 9px;
+        font-size: clamp(9px, 0.8vmin, 11px);
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -561,7 +571,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 8px 12px;
+        padding: 0.7vmin 1.1vmin;
         background: rgba(255,255,255,0.05);
         transition: background 0.2s;
       }
@@ -571,7 +581,7 @@
       }
       
       .pac-copycat-header-title {
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         font-weight: 600;
         color: #a855f7;
       }
@@ -580,9 +590,9 @@
         background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
         border: none;
         color: #fff;
-        padding: 6px 14px;
-        border-radius: 4px;
-        font-size: 11px;
+        padding: 0.6vmin 1.3vmin;
+        border-radius: 0.37vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s;
@@ -590,7 +600,7 @@
       
       .pac-copycat-toggle:hover {
         transform: scale(1.05);
-        box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4);
+        box-shadow: 0 2px 0.7vmin rgba(168, 85, 247, 0.4);
       }
       
       .pac-copycat-toggle.active {
@@ -598,13 +608,13 @@
       }
       
       .pac-copycat-toggle.active:hover {
-        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+        box-shadow: 0 2px 0.7vmin rgba(239, 68, 68, 0.4);
       }
       
       .pac-copycat-status {
-        padding: 8px 12px;
+        padding: 0.7vmin 1.1vmin;
         background: rgba(168, 85, 247, 0.15);
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #c4b5fd;
         text-align: center;
         display: none;
@@ -628,7 +638,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 8px 12px;
+        padding: 0.7vmin 1.1vmin;
         background: rgba(255,255,255,0.05);
         transition: background 0.2s;
       }
@@ -638,25 +648,25 @@
       }
       
       .pac-mlg-header-title {
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         font-weight: 600;
         color: #00ff00;
-        text-shadow: 0 0 10px #00ff00;
+        text-shadow: 0 0 0.9vmin #00ff00;
         animation: mlgGlow 0.5s ease-in-out infinite alternate;
       }
       
       @keyframes mlgGlow {
-        from { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; }
-        to { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff; }
+        from { text-shadow: 0 0 0.46vmin #00ff00, 0 0 0.9vmin #00ff00; }
+        to { text-shadow: 0 0 0.9vmin #ff00ff, 0 0 1.9vmin #ff00ff, 0 0 2.8vmin #ff00ff; }
       }
       
       .pac-mlg-toggle {
         background: linear-gradient(135deg, #00ff00 0%, #ff00ff 50%, #00ffff 100%);
         border: none;
         color: #000;
-        padding: 6px 14px;
-        border-radius: 4px;
-        font-size: 11px;
+        padding: 0.6vmin 1.3vmin;
+        border-radius: 0.37vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 800;
         cursor: pointer;
         transition: all 0.2s;
@@ -665,7 +675,7 @@
       
       .pac-mlg-toggle:hover {
         transform: scale(1.1) rotate(5deg);
-        box-shadow: 0 0 20px #00ff00;
+        box-shadow: 0 0 1.9vmin #00ff00;
       }
       
       .pac-mlg-toggle.active {
@@ -679,9 +689,9 @@
       }
       
       .pac-mlg-status {
-        padding: 8px 12px;
+        padding: 0.7vmin 1.1vmin;
         background: linear-gradient(90deg, rgba(0,255,0,0.2), rgba(255,0,255,0.2), rgba(0,255,255,0.2));
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #00ff00;
         text-align: center;
         font-weight: bold;
@@ -707,8 +717,8 @@
       /* MLG Hitmarker overlay */
       .pac-mlg-hitmarker {
         position: fixed;
-        width: 60px;
-        height: 60px;
+        width: 5.6vmin;
+        height: 5.6vmin;
         pointer-events: none;
         z-index: 99999;
         animation: hitmarkerPop 0.3s ease-out forwards;
@@ -719,20 +729,20 @@
         content: '';
         position: absolute;
         background: white;
-        box-shadow: 0 0 10px #fff, 0 0 20px #fff;
+        box-shadow: 0 0 0.9vmin #fff, 0 0 1.9vmin #fff;
       }
       
       .pac-mlg-hitmarker::before {
-        width: 4px;
-        height: 20px;
+        width: 0.37vmin;
+        height: 1.9vmin;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) rotate(45deg);
       }
       
       .pac-mlg-hitmarker::after {
-        width: 4px;
-        height: 20px;
+        width: 0.37vmin;
+        height: 1.9vmin;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) rotate(-45deg);
@@ -748,15 +758,15 @@
       .pac-mlg-text {
         position: fixed;
         font-family: 'Impact', 'Arial Black', sans-serif;
-        font-size: 48px;
+        font-size: clamp(33px, 4.4vmin, 61px);
         font-weight: bold;
         color: #fff;
         text-shadow: 
-          -3px -3px 0 #000,
-          3px -3px 0 #000,
-          -3px 3px 0 #000,
-          3px 3px 0 #000,
-          0 0 20px #ff0000;
+          -0.28vmin -0.28vmin 0 #000,
+          0.28vmin -0.28vmin 0 #000,
+          -0.28vmin 0.28vmin 0 #000,
+          0.28vmin 0.28vmin 0 #000,
+          0 0 1.9vmin #ff0000;
         pointer-events: none;
         z-index: 99999;
         animation: mlgTextPop 1s ease-out forwards;
@@ -768,20 +778,20 @@
         0% { opacity: 0; transform: scale(0) rotate(-20deg); }
         20% { opacity: 1; transform: scale(1.3) rotate(10deg); }
         40% { transform: scale(1) rotate(-5deg); }
-        100% { opacity: 0; transform: scale(1.5) translateY(-50px) rotate(5deg); }
+        100% { opacity: 0; transform: scale(1.5) translateY(-4.6vmin) rotate(5deg); }
       }
       
       /* MLG Screen shake */
       @keyframes mlgShake {
         0%, 100% { transform: translateX(0); }
-        10% { transform: translateX(-10px) rotate(-1deg); }
-        20% { transform: translateX(10px) rotate(1deg); }
-        30% { transform: translateX(-10px) rotate(-1deg); }
-        40% { transform: translateX(10px) rotate(1deg); }
-        50% { transform: translateX(-5px); }
-        60% { transform: translateX(5px); }
-        70% { transform: translateX(-5px); }
-        80% { transform: translateX(5px); }
+        10% { transform: translateX(-0.9vmin) rotate(-1deg); }
+        20% { transform: translateX(0.9vmin) rotate(1deg); }
+        30% { transform: translateX(-0.9vmin) rotate(-1deg); }
+        40% { transform: translateX(0.9vmin) rotate(1deg); }
+        50% { transform: translateX(-0.46vmin); }
+        60% { transform: translateX(0.46vmin); }
+        70% { transform: translateX(-0.46vmin); }
+        80% { transform: translateX(0.46vmin); }
         90% { transform: translateX(-2px); }
       }
       
@@ -792,8 +802,8 @@
       /* MLG Lens flare */
       .pac-mlg-lensflare {
         position: fixed;
-        width: 200px;
-        height: 200px;
+        width: 18.5vmin;
+        height: 18.5vmin;
         background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,0,0.5) 30%, transparent 70%);
         border-radius: 50%;
         pointer-events: none;
@@ -804,7 +814,7 @@
       @keyframes lensFlare {
         0% { opacity: 0; transform: scale(0.3); }
         30% { opacity: 1; transform: scale(1); }
-        100% { opacity: 0; transform: scale(1.5) translateX(100px); }
+        100% { opacity: 0; transform: scale(1.5) translateX(9.3vmin); }
       }
       
       /* MLG Illuminati triangle */
@@ -812,42 +822,42 @@
         position: fixed;
         width: 0;
         height: 0;
-        border-left: 80px solid transparent;
-        border-right: 80px solid transparent;
-        border-bottom: 140px solid #00ff00;
+        border-left: 7.4vmin solid transparent;
+        border-right: 7.4vmin solid transparent;
+        border-bottom: 13.0vmin solid #00ff00;
         pointer-events: none;
         z-index: 99999;
         animation: illuminatiFly 2s ease-out forwards;
-        filter: drop-shadow(0 0 30px #00ff00);
+        filter: drop-shadow(0 0 2.8vmin #00ff00);
       }
       
       .pac-mlg-illuminati::after {
         content: '👁';
         position: absolute;
-        top: 45px;
-        left: -20px;
-        font-size: 40px;
+        top: 4.2vmin;
+        left: -1.9vmin;
+        font-size: clamp(27px, 3.7vmin, 51px);
       }
       
       @keyframes illuminatiFly {
         0% { opacity: 0; transform: scale(0) rotate(0deg) translate(0, 0); }
         20% { opacity: 1; transform: scale(1.5) rotate(180deg); }
-        50% { transform: scale(1.2) rotate(360deg) translate(var(--fly-x, 100px), var(--fly-y, -100px)); }
-        80% { opacity: 1; transform: scale(1) rotate(540deg) translate(calc(var(--fly-x, 100px) * 2), calc(var(--fly-y, -100px) * 2)); }
-        100% { opacity: 0; transform: scale(0.5) rotate(720deg) translate(calc(var(--fly-x, 100px) * 3), calc(var(--fly-y, -100px) * 3)); }
+        50% { transform: scale(1.2) rotate(360deg) translate(var(--fly-x, 9.3vmin), var(--fly-y, -9.3vmin)); }
+        80% { opacity: 1; transform: scale(1) rotate(540deg) translate(calc(var(--fly-x, 9.3vmin) * 2), calc(var(--fly-y, -9.3vmin) * 2)); }
+        100% { opacity: 0; transform: scale(0.5) rotate(720deg) translate(calc(var(--fly-x, 9.3vmin) * 3), calc(var(--fly-y, -9.3vmin) * 3)); }
       }
       
       /* MLG Doritos */
       .pac-mlg-dorito {
         position: fixed;
-        font-size: 240px;
+        font-size: clamp(167px, 22.2vmin, 311px);
         pointer-events: none;
         z-index: 99997;
         animation: doritoFall 3s ease-in forwards;
       }
       
       @keyframes doritoFall {
-        0% { opacity: 1; transform: translateY(-200px) rotate(0deg); }
+        0% { opacity: 1; transform: translateY(-18.5vmin) rotate(0deg); }
         100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
       }
       
@@ -855,7 +865,7 @@
       .pac-mlg-sample {
         position: fixed;
         font-family: 'Comic Sans MS', cursive;
-        font-size: 24px;
+        font-size: clamp(16px, 2.2vmin, 30px);
         color: #ff00ff;
         text-shadow: 2px 2px 0 #000;
         pointer-events: none;
@@ -867,9 +877,9 @@
         0%, 100% { opacity: 0; }
         20%, 80% { opacity: 1; }
         0% { transform: translateY(0); }
-        25% { transform: translateY(-20px); }
+        25% { transform: translateY(-1.9vmin); }
         50% { transform: translateY(0); }
-        75% { transform: translateY(-10px); }
+        75% { transform: translateY(-0.9vmin); }
         100% { transform: translateY(0); }
       }
       
@@ -877,15 +887,15 @@
       .pac-mlg-360 {
         position: fixed;
         font-family: 'Impact', 'Arial Black', sans-serif;
-        font-size: 72px;
+        font-size: clamp(50px, 6.7vmin, 94px);
         font-weight: bold;
         color: #ff0000;
         text-shadow: 
-          -4px -4px 0 #000,
-          4px -4px 0 #000,
-          -4px 4px 0 #000,
-          4px 4px 0 #000,
-          0 0 30px #ff0000;
+          -0.37vmin -0.37vmin 0 #000,
+          0.37vmin -0.37vmin 0 #000,
+          -0.37vmin 0.37vmin 0 #000,
+          0.37vmin 0.37vmin 0 #000,
+          0 0 2.8vmin #ff0000;
         pointer-events: none;
         z-index: 99999;
         animation: spin360 0.5s linear infinite, mlg360Pop 2s ease-out forwards;
@@ -897,20 +907,20 @@
       }
       
       @keyframes mlg360Pop {
-        0% { opacity: 0; font-size: 20px; }
-        20% { opacity: 1; font-size: 80px; }
+        0% { opacity: 0; font-size: clamp(14px, 1.9vmin, 26px); }
+        20% { opacity: 1; font-size: clamp(55px, 7.4vmin, 103px); }
         80% { opacity: 1; }
-        100% { opacity: 0; font-size: 120px; }
+        100% { opacity: 0; font-size: clamp(83px, 11.1vmin, 155px); }
       }
       
       /* MLG Airhorn visual */
       .pac-mlg-airhorn {
         position: fixed;
-        font-size: 80px;
+        font-size: clamp(55px, 7.4vmin, 103px);
         pointer-events: none;
         z-index: 99999;
         animation: airhornBlast 0.8s ease-out forwards;
-        filter: drop-shadow(0 0 20px #ffff00);
+        filter: drop-shadow(0 0 1.9vmin #ffff00);
       }
       
       @keyframes airhornBlast {
@@ -924,23 +934,23 @@
       /* MLG Weed leaf */
       .pac-mlg-weed {
         position: fixed;
-        font-size: 50px;
+        font-size: clamp(34px, 4.6vmin, 64px);
         pointer-events: none;
         z-index: 99997;
         animation: weedFloat 3s ease-out forwards;
-        filter: drop-shadow(0 0 10px #00ff00);
+        filter: drop-shadow(0 0 0.9vmin #00ff00);
       }
       
       @keyframes weedFloat {
         0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
-        50% { opacity: 1; transform: translateY(-100px) rotate(180deg) scale(1.2); }
-        100% { opacity: 0; transform: translateY(-200px) rotate(360deg) scale(0.5); }
+        50% { opacity: 1; transform: translateY(-9.3vmin) rotate(180deg) scale(1.2); }
+        100% { opacity: 0; transform: translateY(-18.5vmin) rotate(360deg) scale(0.5); }
       }
       
       /* MLG Snoop overlay */
       .pac-mlg-snoop {
         position: fixed;
-        font-size: 100px;
+        font-size: clamp(70px, 9.3vmin, 130px);
         pointer-events: none;
         z-index: 99996;
         animation: snoopDance 2s ease-in-out forwards;
@@ -950,7 +960,7 @@
         0%, 100% { opacity: 0; }
         20%, 80% { opacity: 1; }
         0%, 20%, 40%, 60%, 80%, 100% { transform: translateX(0); }
-        10%, 30%, 50%, 70%, 90% { transform: translateX(20px); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(1.9vmin); }
       }
 
       /* Target highlighter overlays - click-through */
@@ -958,12 +968,12 @@
         position: fixed;
         pointer-events: none;
         z-index: 9999;
-        border-radius: 8px;
-        border: 4px solid var(--pac-target-color, #fbbf24);
+        border-radius: 0.7vmin;
+        border: 0.37vmin solid var(--pac-target-color, #fbbf24);
         background: var(--pac-target-color-bg, rgba(251, 191, 36, 0.45));
         box-shadow: 
-          0 0 20px var(--pac-target-color, #fbbf24),
-          inset 0 0 30px var(--pac-target-color-bg, rgba(251, 191, 36, 0.35));
+          0 0 1.9vmin var(--pac-target-color, #fbbf24),
+          inset 0 0 2.8vmin var(--pac-target-color-bg, rgba(251, 191, 36, 0.35));
         animation: targetHighlightPulse 1s ease-in-out infinite;
       }
       
@@ -971,22 +981,22 @@
         position: fixed;
         pointer-events: none;
         z-index: 9999;
-        border-radius: 8px;
-        border: 4px solid var(--pac-team-color, #FF1493);
+        border-radius: 0.7vmin;
+        border: 0.37vmin solid var(--pac-team-color, #FF1493);
         background: var(--pac-team-color-bg, rgba(255, 20, 147, 0.45));
         box-shadow: 
-          0 0 20px var(--pac-team-color, #FF1493),
-          inset 0 0 30px var(--pac-team-color-bg, rgba(255, 20, 147, 0.35));
+          0 0 1.9vmin var(--pac-team-color, #FF1493),
+          inset 0 0 2.8vmin var(--pac-team-color-bg, rgba(255, 20, 147, 0.35));
         animation: teamHighlightPulse 1s ease-in-out infinite;
       }
       
       /* Both target and team - show both colors */
       .pac-target-highlighter.also-team {
-        border: 4px solid;
+        border: 0.37vmin solid;
         border-image: linear-gradient(45deg, var(--pac-target-color, #fbbf24), var(--pac-team-color, #FF1493)) 1;
         box-shadow: 
-          0 0 20px var(--pac-target-color, #fbbf24),
-          0 0 20px var(--pac-team-color, #FF1493);
+          0 0 1.9vmin var(--pac-target-color, #fbbf24),
+          0 0 1.9vmin var(--pac-team-color, #FF1493);
       }
       
       @keyframes targetHighlightPulse {
@@ -1019,7 +1029,7 @@
       }
       
       #pac-calc-body {
-        padding: 16px;
+        padding: 1.5vmin;
         max-height: 70vh;
         overflow-y: auto;
       }
@@ -1039,19 +1049,19 @@
       }
       
       .pac-section {
-        margin-bottom: 16px;
+        margin-bottom: 1.5vmin;
         background: rgba(255,255,255,0.03);
-        border-radius: 8px;
-        padding: 12px;
+        border-radius: 0.7vmin;
+        padding: 1.1vmin;
         border: 1px solid rgba(255,255,255,0.05);
         position: relative;
         z-index: 1;  /* Above side panels */
       }
       
       .pac-section-title {
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         font-weight: 600;
-        margin-bottom: 10px;
+        margin-bottom: 0.9vmin;
         color: #64b5f6;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -1059,8 +1069,8 @@
       
       .pac-row {
         display: flex;
-        gap: 8px;
-        margin-bottom: 8px;
+        gap: 0.7vmin;
+        margin-bottom: 0.7vmin;
       }
       
       .pac-row:last-child {
@@ -1073,8 +1083,8 @@
       
       .pac-field label {
         display: block;
-        font-size: 11px;
-        margin-bottom: 4px;
+        font-size: clamp(9px, 1.0vmin, 14px);
+        margin-bottom: 0.37vmin;
         color: #aaa;
         font-weight: 500;
       }
@@ -1082,12 +1092,12 @@
       .pac-field input,
       .pac-field select {
         width: 100%;
-        padding: 8px;
+        padding: 0.7vmin;
         background: rgba(0,0,0,0.3);
         border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         color: #fff;
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         transition: all 0.2s;
       }
       
@@ -1095,24 +1105,24 @@
       .pac-field select:focus {
         outline: none;
         border-color: #64b5f6;
-        box-shadow: 0 0 8px rgba(100,181,246,0.3);
+        box-shadow: 0 0 0.7vmin rgba(100,181,246,0.3);
       }
       
       .pac-toggle-row {
         display: flex;
-        gap: 12px;
+        gap: 1.1vmin;
         flex-wrap: wrap;
       }
       
       .pac-toggle {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 0.6vmin;
         cursor: pointer;
-        font-size: 12px;
-        padding: 6px 10px;
+        font-size: clamp(9px, 1.1vmin, 15px);
+        padding: 0.6vmin 0.9vmin;
         background: rgba(255,255,255,0.05);
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         transition: all 0.2s;
       }
       
@@ -1121,24 +1131,24 @@
         background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
         border: 2px solid #2196f3;
         color: white;
-        border-radius: 8px;
-        padding: 12px 16px;
-        font-size: 14px;
+        border-radius: 0.7vmin;
+        padding: 1.1vmin 1.5vmin;
+        font-size: clamp(9px, 1.3vmin, 18px);
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        margin-top: 8px;
+        gap: 0.7vmin;
+        margin-top: 0.7vmin;
       }
       
       .pac-new-game-btn:hover {
         background: linear-gradient(135deg, #42a5f5 0%, #2196f3 100%);
         border-color: #42a5f5;
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+        box-shadow: 0 0.37vmin 1.1vmin rgba(33, 150, 243, 0.4);
       }
       
       .pac-new-game-btn:active {
@@ -1154,18 +1164,18 @@
         appearance: none !important;
         -webkit-appearance: none !important;
         -moz-appearance: none !important;
-        width: 24px !important;
-        height: 24px !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
-        max-width: 24px !important;
-        max-height: 24px !important;
+        width: 2.2vmin !important;
+        height: 2.2vmin !important;
+        min-width: 2.2vmin !important;
+        min-height: 2.2vmin !important;
+        max-width: 2.2vmin !important;
+        max-height: 2.2vmin !important;
         background: #111 !important;
-        border: 3px solid #4caf50 !important;
-        border-radius: 4px !important;
+        border: 0.28vmin solid #4caf50 !important;
+        border-radius: 0.37vmin !important;
         cursor: pointer !important;
         position: relative !important;
-        margin: 0 8px 0 0 !important;
+        margin: 0 0.7vmin 0 0 !important;
         padding: 0 !important;
         transition: all 0.2s !important;
         flex-shrink: 0 !important;
@@ -1174,22 +1184,22 @@
         background-image: none !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
-        background-size: 16px 16px !important;
+        background-size: 1.5vmin 1.5vmin !important;
       }
       
       #pac-calc-overlay input[type="checkbox"]:hover:not(:disabled) {
         border-color: #66bb6a !important;
-        box-shadow: 0 0 12px rgba(76, 175, 80, 0.6) !important;
+        box-shadow: 0 0 1.1vmin rgba(76, 175, 80, 0.6) !important;
         background-color: rgba(76, 175, 80, 0.2) !important;
       }
       
       #pac-calc-overlay input[type="checkbox"]:checked {
         background-color: #4caf50 !important;
         border-color: #66bb6a !important;
-        box-shadow: 0 0 10px rgba(76, 175, 80, 0.5) !important;
+        box-shadow: 0 0 0.9vmin rgba(76, 175, 80, 0.5) !important;
         /* White checkmark with blue glow - SVG encoded */
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E") !important;
-        background-size: 18px 18px !important;
+        background-size: 1.7vmin 1.7vmin !important;
       }
       
       #pac-calc-overlay input[type="checkbox"]:disabled {
@@ -1208,15 +1218,15 @@
         appearance: none !important;
         -webkit-appearance: none !important;
         -moz-appearance: none !important;
-        width: 26px !important;
-        height: 26px !important;
-        min-width: 26px !important;
-        min-height: 26px !important;
-        max-width: 26px !important;
-        max-height: 26px !important;
+        width: 2.4vmin !important;
+        height: 2.4vmin !important;
+        min-width: 2.4vmin !important;
+        min-height: 2.4vmin !important;
+        max-width: 2.4vmin !important;
+        max-height: 2.4vmin !important;
         background: #111 !important;
-        border: 3px solid #4caf50 !important;
-        border-radius: 4px !important;
+        border: 0.28vmin solid #4caf50 !important;
+        border-radius: 0.37vmin !important;
         cursor: pointer !important;
         position: relative !important;
         margin: 0 !important;
@@ -1227,21 +1237,21 @@
         background-image: none !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
-        background-size: 18px 18px !important;
+        background-size: 1.7vmin 1.7vmin !important;
       }
       
       .pac-toggle input[type="checkbox"]:hover:not(:disabled) {
         border-color: #66bb6a !important;
-        box-shadow: 0 0 12px rgba(76, 175, 80, 0.6) !important;
+        box-shadow: 0 0 1.1vmin rgba(76, 175, 80, 0.6) !important;
         background-color: rgba(76, 175, 80, 0.2) !important;
       }
       
       .pac-toggle input[type="checkbox"]:checked {
         background-color: #4caf50 !important;
         border-color: #66bb6a !important;
-        box-shadow: 0 0 10px rgba(76, 175, 80, 0.5) !important;
+        box-shadow: 0 0 0.9vmin rgba(76, 175, 80, 0.5) !important;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E") !important;
-        background-size: 20px 20px !important;
+        background-size: 1.9vmin 1.9vmin !important;
       }
       
       .pac-toggle input[type="checkbox"]:disabled {
@@ -1256,28 +1266,28 @@
       }
       
       .pac-warning-banner {
-        padding: 12px;
+        padding: 1.1vmin;
         background: rgba(251, 191, 36, 0.15);
         border: 1px solid rgba(251, 191, 36, 0.4);
-        border-radius: 8px;
+        border-radius: 0.7vmin;
         color: #fbbf24;
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         line-height: 1.4;
       }
       
       .pac-results {
         background: linear-gradient(135deg, rgba(100,181,246,0.1) 0%, rgba(156,39,176,0.1) 100%);
-        padding: 16px;
-        border-radius: 8px;
-        margin-bottom: 16px;
+        padding: 1.5vmin;
+        border-radius: 0.7vmin;
+        margin-bottom: 1.5vmin;
         border: 1px solid rgba(100,181,246,0.2);
       }
       
       .pac-result-row {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
-        font-size: 13px;
+        margin-bottom: 0.9vmin;
+        font-size: clamp(9px, 1.2vmin, 16px);
       }
       
       .pac-result-row:last-child {
@@ -1292,11 +1302,11 @@
       .pac-result-value {
         font-weight: 700;
         color: #fff;
-        font-size: 14px;
+        font-size: clamp(9px, 1.3vmin, 18px);
       }
       
       .pac-confidence-control {
-        margin: 12px 0;
+        margin: 1.1vmin 0;
         padding: 0;
       }
       
@@ -1304,16 +1314,16 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         color: #64b5f6;
-        margin-bottom: 8px;
+        margin-bottom: 0.7vmin;
         font-weight: 600;
       }
       
       .pac-confidence-control input[type="range"] {
         width: 100%;
-        height: 8px;
-        border-radius: 4px;
+        height: 0.7vmin;
+        border-radius: 0.37vmin;
         background: linear-gradient(90deg, 
           rgba(100,181,246,0.3) 0%, 
           rgba(156,39,176,0.3) 50%, 
@@ -1326,35 +1336,35 @@
       .pac-confidence-control input[type="range"]::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 20px;
-        height: 20px;
+        width: 1.9vmin;
+        height: 1.9vmin;
         border-radius: 50%;
         background: linear-gradient(135deg, #64b5f6 0%, #9c27b0 100%);
         cursor: pointer;
-        box-shadow: 0 2px 8px rgba(100,181,246,0.5);
+        box-shadow: 0 2px 0.7vmin rgba(100,181,246,0.5);
         border: 2px solid #fff;
         transition: all 0.2s;
       }
       
       .pac-confidence-control input[type="range"]::-webkit-slider-thumb:hover {
         transform: scale(1.15);
-        box-shadow: 0 4px 12px rgba(100,181,246,0.7);
+        box-shadow: 0 0.37vmin 1.1vmin rgba(100,181,246,0.7);
       }
       
       .pac-confidence-control input[type="range"]::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
+        width: 1.9vmin;
+        height: 1.9vmin;
         border-radius: 50%;
         background: linear-gradient(135deg, #64b5f6 0%, #9c27b0 100%);
         cursor: pointer;
         border: 2px solid #fff;
-        box-shadow: 0 2px 8px rgba(100,181,246,0.5);
+        box-shadow: 0 2px 0.7vmin rgba(100,181,246,0.5);
         transition: all 0.2s;
       }
       
       .pac-confidence-control input[type="range"]::-moz-range-thumb:hover {
         transform: scale(1.15);
-        box-shadow: 0 4px 12px rgba(100,181,246,0.7);
+        box-shadow: 0 0.37vmin 1.1vmin rgba(100,181,246,0.7);
       }
       
       /* Flash animation when target in shop */
@@ -1379,7 +1389,7 @@
         position: absolute;
         inset: 0;  /* Cover entire calculator */
         background: transparent;
-        border-radius: 12px;
+        border-radius: 1.1vmin;
         pointer-events: none;
         animation: targetInShopFullFlash 0.25s ease-in-out infinite;
         z-index: 999999999 !important;
@@ -1391,7 +1401,7 @@
         }
         50% { 
           background: linear-gradient(135deg, rgba(251, 191, 36, 0.3) 0%, rgba(251, 191, 36, 0.5) 100%);
-          box-shadow: inset 0 0 50px rgba(251, 191, 36, 0.6);
+          box-shadow: inset 0 0 4.6vmin rgba(251, 191, 36, 0.6);
         }
       }
       
@@ -1404,7 +1414,7 @@
         50% { 
           border-color: #FF1493;  /* Hot pink */
           background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);  /* Bright hot pink gradient */
-          box-shadow: 0 0 30px rgba(255, 20, 147, 0.8);  /* Glow effect */
+          box-shadow: 0 0 2.8vmin rgba(255, 20, 147, 0.8);  /* Glow effect */
         }
       }
       
@@ -1419,7 +1429,7 @@
         }
         50% { 
           background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-          box-shadow: 0 0 30px rgba(251, 191, 36, 0.9), 0 0 60px rgba(251, 191, 36, 0.5);
+          box-shadow: 0 0 2.8vmin rgba(251, 191, 36, 0.9), 0 0 5.6vmin rgba(251, 191, 36, 0.5);
         }
       }
       
@@ -1429,7 +1439,7 @@
         }
         50% { 
           background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);
-          box-shadow: 0 0 30px rgba(255, 20, 147, 0.9), 0 0 60px rgba(255, 20, 147, 0.5);
+          box-shadow: 0 0 2.8vmin rgba(255, 20, 147, 0.9), 0 0 5.6vmin rgba(255, 20, 147, 0.5);
         }
       }
       
@@ -1458,11 +1468,11 @@
         }
         25% { 
           background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-          box-shadow: 0 0 30px rgba(251, 191, 36, 0.9);
+          box-shadow: 0 0 2.8vmin rgba(251, 191, 36, 0.9);
         }
         75% { 
           background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);
-          box-shadow: 0 0 30px rgba(255, 20, 147, 0.9);
+          box-shadow: 0 0 2.8vmin rgba(255, 20, 147, 0.9);
         }
       }
       
@@ -1479,15 +1489,15 @@
         position: fixed;
         z-index: 2147483647;
         background: rgba(239, 68, 68, 0.95);
-        border: 3px solid #fbbf24;
-        border-radius: 12px;
+        border: 0.28vmin solid #fbbf24;
+        border-radius: 1.1vmin;
         display: none;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        padding: 16px;
-        box-shadow: 0 0 30px rgba(251, 191, 36, 0.8), 0 0 60px rgba(239, 68, 68, 0.6);
+        gap: 0.7vmin;
+        padding: 1.5vmin;
+        box-shadow: 0 0 2.8vmin rgba(251, 191, 36, 0.8), 0 0 5.6vmin rgba(239, 68, 68, 0.6);
         animation: blockerPulse 0.3s ease-in-out infinite alternate;
         cursor: default;
         user-select: none;
@@ -1499,42 +1509,42 @@
       
       @keyframes blockerPulse {
         from { 
-          box-shadow: 0 0 30px rgba(251, 191, 36, 0.8), 0 0 60px rgba(239, 68, 68, 0.6);
+          box-shadow: 0 0 2.8vmin rgba(251, 191, 36, 0.8), 0 0 5.6vmin rgba(239, 68, 68, 0.6);
           transform: scale(1);
         }
         to { 
-          box-shadow: 0 0 40px rgba(251, 191, 36, 1), 0 0 80px rgba(239, 68, 68, 0.8);
+          box-shadow: 0 0 3.7vmin rgba(251, 191, 36, 1), 0 0 7.4vmin rgba(239, 68, 68, 0.8);
           transform: scale(1.02);
         }
       }
       
       #pac-refresh-blocker .blocker-title {
-        font-size: 14px;
+        font-size: clamp(9px, 1.3vmin, 18px);
         font-weight: 700;
         color: #fbbf24;
         text-transform: uppercase;
         letter-spacing: 1px;
-        text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        text-shadow: 0 0 0.9vmin rgba(0,0,0,0.5);
       }
       
       #pac-refresh-blocker .blocker-pokemon {
-        font-size: 18px;
+        font-size: clamp(12px, 1.7vmin, 23px);
         font-weight: 800;
         color: white;
-        text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        text-shadow: 0 0 0.9vmin rgba(0,0,0,0.5);
       }
       
       #pac-refresh-blocker .blocker-dismiss {
         position: absolute;
-        top: -12px;
-        right: -12px;
-        width: 28px;
-        height: 28px;
+        top: -1.1vmin;
+        right: -1.1vmin;
+        width: 2.6vmin;
+        height: 2.6vmin;
         background: #1e293b;
         border: 2px solid #fbbf24;
         border-radius: 50%;
         color: #fbbf24;
-        font-size: 16px;
+        font-size: clamp(11px, 1.5vmin, 21px);
         font-weight: 700;
         cursor: pointer;
         display: flex;
@@ -1551,10 +1561,10 @@
       
       .pac-footer {
         background: rgba(0,0,0,0.2);
-        padding: 10px 16px;
-        border-radius: 0 0 10px 10px;
+        padding: 0.9vmin 1.5vmin;
+        border-radius: 0 0 0.9vmin 0.9vmin;
         border-top: 1px solid rgba(255,255,255,0.05);
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #888;
         display: flex;
         justify-content: space-between;
@@ -1564,7 +1574,7 @@
       }
       
       .pac-collapsible {
-        margin-bottom: 16px;
+        margin-bottom: 1.5vmin;
       }
       
       .pac-collapse-btn {
@@ -1572,10 +1582,10 @@
         background: rgba(100,181,246,0.1);
         border: 1px solid rgba(100,181,246,0.2);
         color: #64b5f6;
-        padding: 10px;
-        border-radius: 6px;
+        padding: 0.9vmin;
+        border-radius: 0.6vmin;
         cursor: pointer;
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         font-weight: 600;
         transition: all 0.2s;
         text-align: left;
@@ -1590,22 +1600,22 @@
         overflow: hidden;
         transition: max-height 0.3s ease;
         background: rgba(255,255,255,0.02);
-        border-radius: 0 0 6px 6px;
-        padding: 0 12px;
+        border-radius: 0 0 0.6vmin 0.6vmin;
+        padding: 0 1.1vmin;
       }
       
       .pac-collapse-content.expanded {
-        max-height: 800px;
-        padding: 12px;
+        max-height: 74.1vmin;
+        padding: 1.1vmin;
         border: 1px solid rgba(255,255,255,0.05);
         border-top: none;
       }
       
       .pac-status-msg {
-        font-size: 12px;
-        padding: 8px;
-        border-radius: 6px;
-        margin-top: 8px;
+        font-size: clamp(9px, 1.1vmin, 15px);
+        padding: 0.7vmin;
+        border-radius: 0.6vmin;
+        margin-top: 0.7vmin;
         text-align: center;
       }
       
@@ -1630,13 +1640,13 @@
       .pac-live-indicator {
         display: none;
         align-items: center;
-        gap: 6px;
-        font-size: 11px;
+        gap: 0.6vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #4caf50;
-        margin-top: 8px;
-        padding: 6px 10px;
+        margin-top: 0.7vmin;
+        padding: 0.6vmin 0.9vmin;
         background: rgba(76,175,80,0.1);
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         border: 1px solid rgba(76,175,80,0.2);
       }
       
@@ -1656,9 +1666,9 @@
       
       .pac-pokemon-chip {
         display: inline-block;
-        padding: 2px 8px;
-        border-radius: 12px;
-        font-size: 11px;
+        padding: 2px 0.7vmin;
+        border-radius: 1.1vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 500;
         color: white;
       }
@@ -1671,8 +1681,8 @@
       
       .pac-live-controls {
         display: flex;
-        gap: 8px;
-        margin-top: 8px;
+        gap: 0.7vmin;
+        margin-top: 0.7vmin;
       }
       
       .pac-live-toggle {
@@ -1680,13 +1690,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        padding: 10px;
+        gap: 0.7vmin;
+        padding: 0.9vmin;
         background: rgba(255,255,255,0.05);
         border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         color: #fff;
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s;
@@ -1704,9 +1714,9 @@
       
       .pac-live-status {
         font-weight: 700;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 11px;
+        padding: 2px 0.7vmin;
+        border-radius: 0.37vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
       }
       
       .pac-live-toggle .pac-live-status {
@@ -1721,12 +1731,12 @@
       
       .pac-speed-select {
         flex: 1;
-        padding: 8px;
+        padding: 0.7vmin;
         background: rgba(0,0,0,0.3);
         border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         color: #fff;
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         cursor: pointer;
         transition: all 0.2s;
       }
@@ -1738,7 +1748,7 @@
       .pac-speed-select:focus {
         outline: none;
         border-color: #64b5f6;
-        box-shadow: 0 0 8px rgba(100,181,246,0.3);
+        box-shadow: 0 0 0.7vmin rgba(100,181,246,0.3);
       }
       
       /* Pokemon Autocomplete Styles */
@@ -1750,18 +1760,18 @@
       
       /* Evolution Family Styles (v2.5.0) */
       .pac-evolution-family {
-        margin-top: 8px;
-        padding: 8px;
+        margin-top: 0.7vmin;
+        padding: 0.7vmin;
         background: rgba(100, 181, 246, 0.1);
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         border: 1px solid rgba(100, 181, 246, 0.2);
       }
       
       .pac-family-title {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 600;
         color: #64b5f6;
-        margin-bottom: 6px;
+        margin-bottom: 0.6vmin;
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
@@ -1769,17 +1779,17 @@
       .pac-family-breakdown {
         display: flex;
         flex-direction: column;
-        gap: 4px;
-        margin: 8px 0;
+        gap: 0.37vmin;
+        margin: 0.7vmin 0;
       }
       
       .pac-family-row {
         display: flex;
         justify-content: space-between;
-        font-size: 12px;
-        padding: 4px 6px;
+        font-size: clamp(9px, 1.1vmin, 15px);
+        padding: 0.37vmin 0.6vmin;
         background: rgba(0, 0, 0, 0.2);
-        border-radius: 4px;
+        border-radius: 0.37vmin;
       }
       
       .pac-family-name {
@@ -1796,9 +1806,9 @@
         font-weight: 700;
         text-align: right;
         color: #fff;
-        padding-top: 4px;
+        padding-top: 0.37vmin;
         border-top: 1px solid rgba(100, 181, 246, 0.3);
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
       }
 
       .pac-autocomplete-input {
@@ -1808,14 +1818,14 @@
       
       #pacAutocompleteDropdown {
         position: fixed;
-        width: 300px;
-        max-height: 400px;
+        width: 27.8vmin;
+        max-height: 37.0vmin;
         overflow-y: auto;
         background: #0a0e27;
         border: 1px solid rgba(100,181,246,0.3);
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         z-index: 1000000;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        box-shadow: 0 0.7vmin 1.5vmin rgba(0,0,0,0.4);
       }
       
       #pacAutocompleteDropdown.hidden {
@@ -1826,7 +1836,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 12px;
+        padding: 0.9vmin 1.1vmin;
         cursor: pointer;
         border-bottom: 1px solid rgba(255,255,255,0.05);
         transition: all 0.2s;
@@ -1843,13 +1853,13 @@
       .pac-pokemon-name {
         font-weight: 600;
         color: #fff;
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
       }
       
       .pac-pokemon-rarity {
-        font-size: 10px;
-        padding: 3px 8px;
-        border-radius: 4px;
+        font-size: clamp(9px, 0.9vmin, 12px);
+        padding: 0.28vmin 0.7vmin;
+        border-radius: 0.37vmin;
         text-transform: uppercase;
         font-weight: 700;
         letter-spacing: 0.5px;
@@ -1857,11 +1867,11 @@
       
       #pacRarityError {
         color: #ff5252;
-        font-size: 11px;
-        margin-top: 6px;
-        padding: 6px 10px;
+        font-size: clamp(9px, 1.0vmin, 14px);
+        margin-top: 0.6vmin;
+        padding: 0.6vmin 0.9vmin;
         background: rgba(244,67,54,0.15);
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         border: 1px solid rgba(244,67,54,0.3);
       }
       
@@ -1872,19 +1882,19 @@
       /* Scrollbar styling */
       #pac-calc-body::-webkit-scrollbar,
       #pacAutocompleteDropdown::-webkit-scrollbar {
-        width: 8px;
+        width: 0.7vmin;
       }
       
       #pac-calc-body::-webkit-scrollbar-track,
       #pacAutocompleteDropdown::-webkit-scrollbar-track {
         background: rgba(0,0,0,0.2);
-        border-radius: 10px;
+        border-radius: 0.9vmin;
       }
       
       #pac-calc-body::-webkit-scrollbar-thumb,
       #pacAutocompleteDropdown::-webkit-scrollbar-thumb {
         background: rgba(100,181,246,0.3);
-        border-radius: 10px;
+        border-radius: 0.9vmin;
       }
       
       #pac-calc-body::-webkit-scrollbar-thumb:hover,
@@ -1900,12 +1910,12 @@
         position: absolute;
         left: 0;
         top: 0;
-        width: 380px;
+        width: 35.2vmin;
         height: 100%;
         background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
         border: 2px solid #0f3460;
-        border-radius: 12px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        border-radius: 1.1vmin;
+        box-shadow: 0 0.7vmin 3.0vmin rgba(0,0,0,0.4);
         transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: -2147483648 !important;  /* Absolute minimum - below everything for flash visibility */
         display: flex;
@@ -1913,7 +1923,7 @@
       }
       
       .pac-team-panel.expanded {
-        left: 390px;
+        left: 36.1vmin;
       }
       
       .pac-team-toggle {
@@ -1921,18 +1931,18 @@
         left: 100%;
         top: 50%;
         transform: translateY(-50%);
-        width: 40px;
-        height: 80px;
+        width: 3.7vmin;
+        height: 7.4vmin;
         background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
         border: 2px solid #0f3460;
         border-left: none;
-        border-radius: 0 8px 8px 0;
+        border-radius: 0 0.7vmin 0.7vmin 0;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #64b5f6;
-        font-size: 20px;
+        font-size: clamp(14px, 1.9vmin, 26px);
         z-index: -1 !important;  /* Below main calculator so flash shows */
       }
       
@@ -1955,7 +1965,7 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        padding: 16px;
+        padding: 1.5vmin;
         position: relative;
         opacity: 0;
         transition: opacity 0.2s ease-in-out;
@@ -1972,14 +1982,14 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 16px;
-        padding-bottom: 12px;
+        margin-bottom: 1.5vmin;
+        padding-bottom: 1.1vmin;
         border-bottom: 1px solid rgba(255,255,255,0.1);
       }
       
       .pac-team-header h3 {
         margin: 0;
-        font-size: 16px;
+        font-size: clamp(11px, 1.5vmin, 21px);
         color: #64b5f6;
         font-weight: 600;
       }
@@ -1988,15 +1998,15 @@
         background: none;
         border: none;
         color: #888;
-        font-size: 24px;
+        font-size: clamp(16px, 2.2vmin, 30px);
         cursor: pointer;
         padding: 0;
-        width: 28px;
-        height: 28px;
+        width: 2.6vmin;
+        height: 2.6vmin;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 4px;
+        border-radius: 0.37vmin;
         transition: all 0.2s;
       }
       
@@ -2008,16 +2018,16 @@
       .pac-team-list {
         flex: 1;
         overflow-y: auto;
-        margin-bottom: 16px;
-        min-height: 200px;
+        margin-bottom: 1.5vmin;
+        min-height: 18.5vmin;
       }
       
       .pac-team-item {
         background: rgba(0,0,0,0.3);
         border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 8px;
-        padding: 12px;
-        margin-bottom: 8px;
+        border-radius: 0.7vmin;
+        padding: 1.1vmin;
+        margin-bottom: 0.7vmin;
         transition: all 0.2s;
         cursor: pointer;
       }
@@ -2046,7 +2056,7 @@
       
       @keyframes impossiblePulse {
         0%, 100% { background: rgba(244, 67, 54, 0.15); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); }
-        50% { background: rgba(244, 67, 54, 0.25); box-shadow: 0 0 8px 2px rgba(244, 67, 54, 0.3); }
+        50% { background: rgba(244, 67, 54, 0.25); box-shadow: 0 0 0.7vmin 2px rgba(244, 67, 54, 0.3); }
       }
       
       /* Danger state - orange warning */
@@ -2058,16 +2068,16 @@
       
       @keyframes dangerPulse {
         0%, 100% { background: rgba(255, 152, 0, 0.12); box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
-        50% { background: rgba(255, 152, 0, 0.2); box-shadow: 0 0 6px 1px rgba(255, 152, 0, 0.25); }
+        50% { background: rgba(255, 152, 0, 0.2); box-shadow: 0 0 0.6vmin 1px rgba(255, 152, 0, 0.25); }
       }
       
       /* Warning badges */
       .pac-warning-badge {
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         font-weight: bold;
-        padding: 2px 6px;
-        border-radius: 4px;
-        margin-left: 4px;
+        padding: 2px 0.6vmin;
+        border-radius: 0.37vmin;
+        margin-left: 0.37vmin;
       }
       
       .pac-impossible-badge {
@@ -2107,20 +2117,20 @@
       .pac-team-item-header {
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-bottom: 8px;
+        gap: 0.7vmin;
+        margin-bottom: 0.7vmin;
       }
       
       .pac-team-checkbox {
-        width: 18px;
-        height: 18px;
+        width: 1.7vmin;
+        height: 1.7vmin;
         cursor: pointer;
       }
       
       .pac-team-name {
         flex: 1;
         font-weight: 600;
-        font-size: 14px;
+        font-size: clamp(9px, 1.3vmin, 18px);
         color: #fff;
       }
       
@@ -2128,15 +2138,15 @@
         background: none;
         border: none;
         color: #f44336;
-        font-size: 18px;
+        font-size: clamp(12px, 1.7vmin, 23px);
         cursor: pointer;
         padding: 0;
-        width: 24px;
-        height: 24px;
+        width: 2.2vmin;
+        height: 2.2vmin;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 4px;
+        border-radius: 0.37vmin;
         transition: all 0.2s;
       }
       
@@ -2145,28 +2155,28 @@
       }
       
       .pac-team-meta {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #888;
-        margin-bottom: 6px;
+        margin-bottom: 0.6vmin;
       }
       
       .pac-team-stats {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        font-size: 11px;
+        gap: 0.7vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
       }
       
       .pac-team-stat-mini {
         background: rgba(0,0,0,0.3);
-        padding: 4px 8px;
-        border-radius: 4px;
+        padding: 0.37vmin 0.7vmin;
+        border-radius: 0.37vmin;
         text-align: center;
       }
       
       .pac-team-stat-mini-label {
         color: #888;
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
       }
       
       .pac-team-stat-mini-value {
@@ -2177,23 +2187,23 @@
       .pac-team-combined {
         background: rgba(100,181,246,0.1);
         border: 1px solid rgba(100,181,246,0.2);
-        border-radius: 8px;
-        padding: 12px;
-        margin-bottom: 12px;
+        border-radius: 0.7vmin;
+        padding: 1.1vmin;
+        margin-bottom: 1.1vmin;
       }
       
       .pac-team-combined-title {
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         color: #64b5f6;
         font-weight: 600;
-        margin-bottom: 8px;
+        margin-bottom: 0.7vmin;
         text-align: center;
       }
       
       .pac-team-combined-stats {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 8px;
+        gap: 0.7vmin;
       }
       
       .pac-team-stat {
@@ -2202,21 +2212,21 @@
       
       .pac-team-stat-label {
         display: block;
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #888;
-        margin-bottom: 4px;
+        margin-bottom: 0.37vmin;
       }
       
       .pac-team-stat-value {
         display: block;
-        font-size: 16px;
+        font-size: clamp(11px, 1.5vmin, 21px);
         color: #fff;
         font-weight: 700;
       }
       
       .pac-team-add-section {
         display: flex;
-        gap: 8px;
+        gap: 0.7vmin;
         align-items: stretch;
       }
       
@@ -2225,9 +2235,9 @@
         background: rgba(0,0,0,0.3);
         border: 1px solid rgba(255,255,255,0.1);
         color: #fff;
-        padding: 10px;
-        border-radius: 6px;
-        font-size: 13px;
+        padding: 0.9vmin;
+        border-radius: 0.6vmin;
+        font-size: clamp(9px, 1.2vmin, 16px);
         transition: all 0.2s;
       }
       
@@ -2241,10 +2251,10 @@
         background: rgba(76,175,80,0.2);
         border: 1px solid rgba(76,175,80,0.4);
         color: #4caf50;
-        padding: 10px 20px;
-        border-radius: 6px;
+        padding: 0.9vmin 1.9vmin;
+        border-radius: 0.6vmin;
         cursor: pointer;
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         font-weight: 600;
         transition: all 0.2s;
         white-space: nowrap;
@@ -2257,15 +2267,15 @@
       
       .pac-team-dropdown {
         position: fixed;
-        width: 320px;
+        width: 29.6vmin;
         background: rgba(26, 26, 46, 0.98);
         border: 2px solid #64b5f6;
-        border-radius: 8px;
-        max-height: 400px;
+        border-radius: 0.7vmin;
+        max-height: 37.0vmin;
         overflow-y: auto;
         z-index: 999999;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-        padding: 8px 0;
+        box-shadow: 0 0.37vmin 1.9vmin rgba(0,0,0,0.6);
+        padding: 0.7vmin 0;
       }
       
       .pac-team-dropdown.hidden {
@@ -2273,10 +2283,10 @@
       }
       
       .pac-team-dropdown-item {
-        padding: 8px 12px;
+        padding: 0.7vmin 1.1vmin;
         cursor: pointer;
         transition: background 0.1s;
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
       }
       
       .pac-team-dropdown-item:hover,
@@ -2289,7 +2299,7 @@
       }
       
       .pac-team-dropdown-meta {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #888;
         margin-top: 2px;
       }
@@ -2299,10 +2309,10 @@
         background: rgba(76,175,80,0.2);
         border: 1px solid rgba(76,175,80,0.4);
         color: #4caf50;
-        padding: 10px;
-        border-radius: 6px;
+        padding: 0.9vmin;
+        border-radius: 0.6vmin;
         cursor: pointer;
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         font-weight: 600;
         transition: all 0.2s;
       }
@@ -2315,42 +2325,42 @@
       .pac-team-empty {
         text-align: center;
         color: #888;
-        font-size: 13px;
-        padding: 40px 20px;
+        font-size: clamp(9px, 1.2vmin, 16px);
+        padding: 3.7vmin 1.9vmin;
       }
       
       .pac-team-empty-icon {
-        font-size: 48px;
-        margin-bottom: 12px;
+        font-size: clamp(33px, 4.4vmin, 61px);
+        margin-bottom: 1.1vmin;
         opacity: 0.3;
       }
       
       /* Counter Intelligence Panel Styles */
       .pac-current-toggle {
-        top: calc(50% - 60px) !important;  /* Stacked above team tracker arrow */
+        top: calc(50% - 5.6vmin) !important;  /* Stacked above team tracker arrow */
       }
       
       .pac-intel-players {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 0.7vmin;
         flex: 1;
         overflow-y: auto;
-        padding-right: 4px;
+        padding-right: 0.37vmin;
       }
       
       .pac-intel-empty {
         color: #666;
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         font-style: italic;
-        padding: 20px;
+        padding: 1.9vmin;
         text-align: center;
       }
       
       .pac-intel-player {
         background: rgba(0,0,0,0.3);
         border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 8px;
+        border-radius: 0.7vmin;
         overflow: hidden;
         transition: all 0.2s;
       }
@@ -2368,8 +2378,8 @@
       .pac-intel-header {
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 10px 12px;
+        gap: 0.7vmin;
+        padding: 0.9vmin 1.1vmin;
         cursor: pointer;
         transition: background 0.2s;
         user-select: none;
@@ -2380,7 +2390,7 @@
       }
       
       .pac-intel-arrow {
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #888;
         transition: transform 0.2s;
       }
@@ -2392,7 +2402,7 @@
       .pac-intel-name {
         flex: 1;
         font-weight: 600;
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         color: #fff;
       }
       
@@ -2401,22 +2411,22 @@
       }
       
       .pac-intel-count {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #888;
       }
       
       .pac-intel-contested-badge {
         background: #ff9800;
         color: #000;
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         font-weight: bold;
-        padding: 2px 6px;
-        border-radius: 4px;
+        padding: 2px 0.6vmin;
+        border-radius: 0.37vmin;
       }
       
       .pac-intel-content {
         display: none;
-        padding: 0 12px 12px 12px;
+        padding: 0 1.1vmin 1.1vmin 1.1vmin;
         border-top: 1px solid rgba(255,255,255,0.05);
       }
       
@@ -2427,26 +2437,26 @@
       .pac-intel-shop {
         display: flex;
         flex-wrap: wrap;
-        gap: 6px;
-        padding: 10px 0;
+        gap: 0.6vmin;
+        padding: 0.9vmin 0;
         border-bottom: 1px solid rgba(255,255,255,0.05);
-        margin-bottom: 10px;
+        margin-bottom: 0.9vmin;
       }
       
       .pac-intel-shop-label {
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #888;
         text-transform: uppercase;
         width: 100%;
-        margin-bottom: 4px;
+        margin-bottom: 0.37vmin;
       }
       
       .pac-intel-shop-slot {
         background: rgba(255,255,255,0.08);
         border: 1px solid rgba(255,255,255,0.15);
-        border-radius: 4px;
-        padding: 4px 8px;
-        font-size: 10px;
+        border-radius: 0.37vmin;
+        padding: 0.37vmin 0.7vmin;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #ccc;
       }
       
@@ -2458,18 +2468,18 @@
       .pac-intel-units {
         display: flex;
         flex-wrap: wrap;
-        gap: 6px;
+        gap: 0.6vmin;
       }
       
       .pac-intel-unit {
         background: rgba(100,181,246,0.12);
         border: 1px solid rgba(100,181,246,0.25);
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 11px;
+        border-radius: 0.6vmin;
+        padding: 0.6vmin 0.9vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 0.6vmin;
         white-space: nowrap;
         transition: all 0.2s;
       }
@@ -2477,7 +2487,7 @@
       .pac-intel-unit.contested {
         border-color: #ff9800;
         background: rgba(255,152,0,0.2);
-        box-shadow: 0 0 6px rgba(255,152,0,0.3);
+        box-shadow: 0 0 0.6vmin rgba(255,152,0,0.3);
       }
       
       .pac-intel-unit-name {
@@ -2487,11 +2497,11 @@
       
       .pac-intel-unit-stars {
         color: #fbbf24;
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
       }
       
       .pac-intel-unit-pool {
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #888;
         margin-left: 2px;
       }
@@ -2506,14 +2516,14 @@
       
       /* Settings/Accessibility Panel */
       .pac-settings-toggle {
-        top: calc(50% + 60px) !important;  /* Below team tracker arrow */
+        top: calc(50% + 5.6vmin) !important;  /* Below team tracker arrow */
       }
       
       .pac-settings-content {
         display: flex;
         flex-direction: column;
         height: 100%;
-        padding: 16px;
+        padding: 1.5vmin;
         position: relative;
         opacity: 0;
         transition: opacity 0.2s ease-in-out;
@@ -2528,8 +2538,8 @@
       }
       
       .pac-settings-section {
-        margin-bottom: 16px;
-        padding-bottom: 16px;
+        margin-bottom: 1.5vmin;
+        padding-bottom: 1.5vmin;
         border-bottom: 1px solid rgba(255,255,255,0.08);
       }
       
@@ -2539,19 +2549,19 @@
       }
       
       .pac-settings-section-title {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 600;
         color: #64b5f6;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        margin-bottom: 12px;
+        margin-bottom: 1.1vmin;
       }
       
       .pac-settings-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 10px;
+        margin-bottom: 0.9vmin;
       }
       
       .pac-settings-row:last-child {
@@ -2559,15 +2569,15 @@
       }
       
       .pac-settings-label {
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         color: #ccc;
       }
       
       .pac-settings-color-input {
-        width: 40px;
-        height: 28px;
+        width: 3.7vmin;
+        height: 2.6vmin;
         border: 2px solid rgba(255,255,255,0.2);
-        border-radius: 4px;
+        border-radius: 0.37vmin;
         cursor: pointer;
         background: transparent;
         padding: 0;
@@ -2583,37 +2593,37 @@
       }
       
       .pac-settings-slider {
-        width: 120px;
-        height: 8px;
+        width: 11.1vmin;
+        height: 0.7vmin;
         -webkit-appearance: none;
         background: linear-gradient(90deg, rgba(100,181,246,0.3) 0%, rgba(100,181,246,0.6) 100%);
-        border-radius: 4px;
+        border-radius: 0.37vmin;
         cursor: pointer;
         outline: none;
         position: relative;
       }
       
       .pac-settings-slider::-webkit-slider-runnable-track {
-        height: 8px;
-        border-radius: 4px;
+        height: 0.7vmin;
+        border-radius: 0.37vmin;
         background: linear-gradient(90deg, rgba(100,181,246,0.2) 0%, rgba(100,181,246,0.4) 100%);
       }
       
       .pac-settings-slider::-webkit-slider-thumb {
         -webkit-appearance: none;
-        width: 20px;
-        height: 20px;
+        width: 1.9vmin;
+        height: 1.9vmin;
         background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
         border-radius: 50%;
         cursor: pointer;
         transition: all 0.2s;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3), 0 0 0 2px rgba(100,181,246,0.3);
-        margin-top: -6px;
+        box-shadow: 0 2px 0.6vmin rgba(0,0,0,0.3), 0 0 0 2px rgba(100,181,246,0.3);
+        margin-top: -0.6vmin;
       }
       
       .pac-settings-slider::-webkit-slider-thumb:hover {
         background: linear-gradient(135deg, #90caf9 0%, #64b5f6 100%);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 0 3px rgba(100,181,246,0.4);
+        box-shadow: 0 2px 0.7vmin rgba(0,0,0,0.4), 0 0 0 0.28vmin rgba(100,181,246,0.4);
         transform: scale(1.1);
       }
       
@@ -2623,27 +2633,27 @@
       
       /* Firefox slider */
       .pac-settings-slider::-moz-range-track {
-        height: 8px;
-        border-radius: 4px;
+        height: 0.7vmin;
+        border-radius: 0.37vmin;
         background: linear-gradient(90deg, rgba(100,181,246,0.2) 0%, rgba(100,181,246,0.4) 100%);
       }
       
       .pac-settings-slider::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
+        width: 1.9vmin;
+        height: 1.9vmin;
         background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
         border-radius: 50%;
         cursor: pointer;
         border: none;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3), 0 0 0 2px rgba(100,181,246,0.3);
+        box-shadow: 0 2px 0.6vmin rgba(0,0,0,0.3), 0 0 0 2px rgba(100,181,246,0.3);
       }
       
       /* Toggle Switch */
       .pac-settings-switch {
         position: relative;
         display: inline-block;
-        width: 48px;
-        height: 26px;
+        width: 4.4vmin;
+        height: 2.4vmin;
       }
       
       .pac-settings-switch input {
@@ -2661,21 +2671,21 @@
         bottom: 0;
         background: rgba(255,255,255,0.1);
         transition: 0.3s;
-        border-radius: 26px;
+        border-radius: 2.4vmin;
         border: 2px solid rgba(255,255,255,0.2);
       }
       
       .pac-settings-switch-slider:before {
         position: absolute;
         content: "";
-        height: 18px;
-        width: 18px;
+        height: 1.7vmin;
+        width: 1.7vmin;
         left: 2px;
         bottom: 2px;
         background: #888;
         transition: 0.3s;
         border-radius: 50%;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        box-shadow: 0 2px 0.37vmin rgba(0,0,0,0.3);
       }
       
       .pac-settings-switch input:checked + .pac-settings-switch-slider {
@@ -2684,7 +2694,7 @@
       }
       
       .pac-settings-switch input:checked + .pac-settings-switch-slider:before {
-        transform: translateX(22px);
+        transform: translateX(2.0vmin);
         background: #fff;
       }
       
@@ -2693,34 +2703,34 @@
       }
       
       .pac-settings-value {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #888;
-        min-width: 45px;
+        min-width: 4.2vmin;
         text-align: right;
       }
       
       .pac-settings-slider-row {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 0.7vmin;
       }
       
       .pac-settings-btn {
         background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
         border: 1px solid #3b82f6;
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         color: #fff;
-        padding: 8px 16px;
-        font-size: 12px;
+        padding: 0.7vmin 1.5vmin;
+        font-size: clamp(9px, 1.1vmin, 15px);
         cursor: pointer;
         transition: all 0.2s;
         width: 100%;
-        margin-top: 8px;
+        margin-top: 0.7vmin;
       }
       
       .pac-settings-btn:hover {
         background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-        box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+        box-shadow: 0 2px 0.7vmin rgba(59,130,246,0.3);
       }
       
       .pac-settings-btn.reset {
@@ -2736,32 +2746,32 @@
       .pac-settings-preview {
         background: var(--pac-bg-color, #1a1a2e);
         border: 2px solid rgba(255,255,255,0.15);
-        border-radius: 8px;
-        padding: 16px;
-        margin-top: 12px;
+        border-radius: 0.7vmin;
+        padding: 1.5vmin;
+        margin-top: 1.1vmin;
         text-align: center;
         transition: background 0.2s;
       }
       
       .pac-settings-preview-text {
         color: var(--pac-text-color, #e0e0e0);
-        font-size: var(--pac-font-size, 12px);
-        margin-bottom: 12px;
+        font-size: var(--pac-font-size, 1.1vmin);
+        margin-bottom: 1.1vmin;
         font-weight: 500;
       }
       
       .pac-settings-preview-flashes {
         display: flex;
         justify-content: center;
-        gap: 8px;
+        gap: 0.7vmin;
         flex-wrap: wrap;
       }
       
       .pac-settings-flash-preview {
         display: inline-block;
-        padding: 8px 16px;
-        border-radius: 6px;
-        font-size: 12px;
+        padding: 0.7vmin 1.5vmin;
+        border-radius: 0.6vmin;
+        font-size: clamp(9px, 1.1vmin, 15px);
         font-weight: 600;
         transition: all 0.2s;
       }
@@ -2769,13 +2779,13 @@
       .pac-settings-flash-preview.target {
         background: var(--pac-target-flash, #fbbf24);
         color: #000;
-        box-shadow: 0 2px 8px var(--pac-target-flash, #fbbf24)66;
+        box-shadow: 0 2px 0.7vmin var(--pac-target-flash, #fbbf24)66;
       }
       
       .pac-settings-flash-preview.team {
         background: var(--pac-team-flash, #FF1493);
         color: #fff;
-        box-shadow: 0 2px 8px var(--pac-team-flash, #FF1493)66;
+        box-shadow: 0 2px 0.7vmin var(--pac-team-flash, #FF1493)66;
       }
       
       .pac-settings-flash-preview.disabled {
@@ -2785,7 +2795,7 @@
       
       /* Shop History / Roll Luck Panel */
       .pac-history-toggle {
-        top: calc(50% + 120px) !important;  /* Below settings arrow */
+        top: calc(50% + 11.1vmin) !important;  /* Below settings arrow */
       }
       
       .pac-history-content {
@@ -2793,7 +2803,7 @@
         flex-direction: column;
         flex: 1;
         min-height: 0;
-        padding: 16px;
+        padding: 1.5vmin;
         position: relative;
         opacity: 0;
         transition: opacity 0.2s ease-in-out;
@@ -2815,11 +2825,11 @@
       .pac-history-disclaimer {
         background: rgba(251, 191, 36, 0.15);
         border: 1px solid rgba(251, 191, 36, 0.3);
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 10px;
+        border-radius: 0.6vmin;
+        padding: 0.6vmin 0.9vmin;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #fbbf24;
-        margin-bottom: 12px;
+        margin-bottom: 1.1vmin;
         text-align: center;
         flex-shrink: 0;
       }
@@ -2839,8 +2849,8 @@
       
       /* Player accordion */
       .pac-history-player {
-        margin-bottom: 8px;
-        border-radius: 8px;
+        margin-bottom: 0.7vmin;
+        border-radius: 0.7vmin;
         overflow: hidden;
         border: 1px solid rgba(255,255,255,0.1);
         background: rgba(255,255,255,0.03);
@@ -2859,7 +2869,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 12px;
+        padding: 0.9vmin 1.1vmin;
         cursor: pointer;
         transition: background 0.2s;
       }
@@ -2870,7 +2880,7 @@
       
       .pac-history-player-name {
         font-weight: 600;
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         color: #e0e0e0;
       }
       
@@ -2881,8 +2891,8 @@
       .pac-history-player-summary {
         display: flex;
         align-items: center;
-        gap: 8px;
-        font-size: 11px;
+        gap: 0.7vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
       }
       
       .pac-history-rolls {
@@ -2891,7 +2901,7 @@
       
       .pac-history-level {
         color: #64b5f6;
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
       }
       
       .pac-history-lucky-count {
@@ -2903,7 +2913,7 @@
       }
       
       .pac-history-expand-icon {
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #666;
         transition: transform 0.2s;
       }
@@ -2913,28 +2923,28 @@
       }
       
       .pac-history-player-content {
-        padding: 0 12px 12px;
+        padding: 0 1.1vmin 1.1vmin;
         border-top: 1px solid rgba(255,255,255,0.08);
       }
       
       .pac-history-level-breakdown {
-        font-size: 9px;
+        font-size: clamp(9px, 0.8vmin, 11px);
         color: #666;
-        padding: 6px 0;
+        padding: 0.6vmin 0;
         font-family: monospace;
       }
       
       .pac-history-section {
-        margin-top: 10px;
+        margin-top: 0.9vmin;
       }
       
       .pac-history-section-title {
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        margin-bottom: 6px;
-        padding-bottom: 4px;
+        margin-bottom: 0.6vmin;
+        padding-bottom: 0.37vmin;
         border-bottom: 1px solid rgba(255,255,255,0.08);
       }
       
@@ -2949,16 +2959,16 @@
       .pac-history-list {
         display: flex;
         flex-direction: column;
-        gap: 3px;
+        gap: 0.28vmin;
       }
       
       .pac-history-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 10px;
+        padding: 0.37vmin 0.7vmin;
+        border-radius: 0.37vmin;
+        font-size: clamp(9px, 0.9vmin, 12px);
       }
       
       .pac-history-section.lucky .pac-history-item {
@@ -2972,13 +2982,13 @@
       .pac-history-pokemon {
         font-weight: 600;
         color: #e0e0e0;
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
       }
       
       .pac-history-stats-row {
         display: flex;
-        gap: 6px;
-        font-size: 9px;
+        gap: 0.6vmin;
+        font-size: clamp(9px, 0.8vmin, 11px);
       }
       
       .pac-history-seen {
@@ -3003,30 +3013,30 @@
       
       .pac-history-empty {
         color: #666;
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-style: italic;
-        padding: 12px 8px;
+        padding: 1.1vmin 0.7vmin;
         text-align: center;
       }
       
       /* Analytics Tab System (v3.2.1) */
       .pac-analytics-tabs {
         display: flex;
-        gap: 4px;
-        margin-bottom: 12px;
-        padding-bottom: 8px;
+        gap: 0.37vmin;
+        margin-bottom: 1.1vmin;
+        padding-bottom: 0.7vmin;
         border-bottom: 1px solid rgba(255,255,255,0.1);
         flex-shrink: 0;
       }
       
       .pac-analytics-tab {
         flex: 1;
-        padding: 8px 12px;
+        padding: 0.7vmin 1.1vmin;
         background: rgba(255,255,255,0.05);
         border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 6px;
+        border-radius: 0.6vmin;
         color: #888;
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s;
@@ -3059,7 +3069,7 @@
         background: #fff;
         border-color: #64b5f6;
         color: #000;
-        box-shadow: 0 0 12px rgba(100, 181, 246, 0.4);
+        box-shadow: 0 0 1.1vmin rgba(100, 181, 246, 0.4);
       }
       
       .pac-analytics-content {
@@ -3076,8 +3086,8 @@
       /* Analytics Panel - White Theme */
       .pac-analytics-panel {
         background: #ffffff;
-        border-radius: 8px;
-        padding: 16px;
+        border-radius: 0.7vmin;
+        padding: 1.5vmin;
         color: #1a1a2e;
         flex: 1;
         min-height: 0;
@@ -3091,7 +3101,7 @@
       }
       
       .pac-analytics-section {
-        margin-bottom: 20px;
+        margin-bottom: 1.9vmin;
       }
       
       .pac-analytics-section:last-child {
@@ -3099,11 +3109,11 @@
       }
       
       .pac-analytics-title {
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         font-weight: 700;
         color: #1a1a2e;
-        margin-bottom: 12px;
-        padding-bottom: 6px;
+        margin-bottom: 1.1vmin;
+        padding-bottom: 0.6vmin;
         border-bottom: 2px solid #64b5f6;
       }
       
@@ -3111,46 +3121,46 @@
       .pac-luck-gauge {
         display: flex;
         align-items: center;
-        gap: 12px;
-        margin-bottom: 16px;
-        padding: 12px;
+        gap: 1.1vmin;
+        margin-bottom: 1.5vmin;
+        padding: 1.1vmin;
         background: #f5f5f5;
-        border-radius: 8px;
+        border-radius: 0.7vmin;
       }
       
       .pac-luck-gauge-bar {
         flex: 1;
-        height: 24px;
+        height: 2.2vmin;
         background: linear-gradient(90deg, #f44336 0%, #ff9800 25%, #ffeb3b 50%, #8bc34a 75%, #4caf50 100%);
-        border-radius: 12px;
+        border-radius: 1.1vmin;
         position: relative;
         overflow: hidden;
       }
       
       .pac-luck-gauge-marker {
         position: absolute;
-        top: -4px;
-        width: 4px;
-        height: 32px;
+        top: -0.37vmin;
+        width: 0.37vmin;
+        height: 3.0vmin;
         background: #1a1a2e;
         border-radius: 2px;
         transform: translateX(-50%);
-        box-shadow: 0 0 8px rgba(0,0,0,0.3);
+        box-shadow: 0 0 0.7vmin rgba(0,0,0,0.3);
         transition: left 0.5s ease-out;
       }
       
       .pac-luck-gauge-labels {
         display: flex;
         justify-content: space-between;
-        font-size: 9px;
+        font-size: clamp(9px, 0.8vmin, 11px);
         color: #666;
-        margin-top: 4px;
+        margin-top: 0.37vmin;
       }
       
       .pac-luck-score {
-        font-size: 28px;
+        font-size: clamp(19px, 2.6vmin, 36px);
         font-weight: 800;
-        min-width: 70px;
+        min-width: 6.5vmin;
         text-align: center;
         transition: color 0.3s ease;
       }
@@ -3171,27 +3181,27 @@
       .pac-rarity-charts {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 1.1vmin;
       }
       
       .pac-rarity-chart {
         background: #f5f5f5;
-        border-radius: 8px;
-        padding: 12px;
+        border-radius: 0.7vmin;
+        padding: 1.1vmin;
       }
       
       .pac-rarity-chart-title {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 600;
         color: #333;
-        margin-bottom: 8px;
+        margin-bottom: 0.7vmin;
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
       
       .pac-rarity-chart-diff {
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         font-weight: 700;
       }
       
@@ -3206,32 +3216,32 @@
       .pac-chart-horizontal {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 0.37vmin;
       }
       
       .pac-chart-row {
         display: flex;
         align-items: center;
-        gap: 8px;
-        height: 24px;
+        gap: 0.7vmin;
+        height: 2.2vmin;
       }
       
       .pac-chart-row-label {
-        width: 28px;
-        font-size: 9px;
+        width: 2.6vmin;
+        font-size: clamp(9px, 0.8vmin, 11px);
         color: #666;
         text-align: right;
         flex-shrink: 0;
       }
       
       .pac-chart-bar-h {
-        height: 20px;
-        border-radius: 4px;
+        height: 1.9vmin;
+        border-radius: 0.37vmin;
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        padding-right: 6px;
-        min-width: 30px;
+        padding-right: 0.6vmin;
+        min-width: 2.8vmin;
         transition: width 0.3s ease;
       }
       
@@ -3253,7 +3263,7 @@
       }
       
       .pac-chart-bar-value {
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         font-weight: 700;
         color: #fff;
         text-shadow: 0 1px 2px rgba(0,0,0,0.3);
@@ -3268,40 +3278,40 @@
       .pac-level-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
+        gap: 0.7vmin;
       }
       
       .pac-level-card {
         background: #f5f5f5;
-        border-radius: 6px;
-        padding: 8px;
+        border-radius: 0.6vmin;
+        padding: 0.7vmin;
         text-align: center;
       }
       
       .pac-level-card-header {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 700;
         color: #64b5f6;
-        margin-bottom: 4px;
+        margin-bottom: 0.37vmin;
       }
       
       .pac-level-card-rolls {
-        font-size: 18px;
+        font-size: clamp(12px, 1.7vmin, 23px);
         font-weight: 800;
         color: #1a1a2e;
       }
       
       .pac-level-card-label {
-        font-size: 9px;
+        font-size: clamp(9px, 0.8vmin, 11px);
         color: #888;
       }
       
       /* Narrative Summary */
       .pac-narrative {
         background: #f5f5f5;
-        border-radius: 8px;
-        padding: 12px;
-        font-size: 12px;
+        border-radius: 0.7vmin;
+        padding: 1.1vmin;
+        font-size: clamp(9px, 1.1vmin, 15px);
         line-height: 1.6;
         color: #333;
       }
@@ -3323,7 +3333,7 @@
       }
       
       .pac-narrative p {
-        margin: 0 0 8px 0;
+        margin: 0 0 0.7vmin 0;
       }
       
       .pac-narrative p:last-child {
@@ -3334,11 +3344,11 @@
       .pac-analytics-disclaimer {
         background: rgba(255, 152, 0, 0.1);
         border: 1px solid rgba(255, 152, 0, 0.3);
-        border-radius: 6px;
-        padding: 8px 12px;
-        font-size: 10px;
+        border-radius: 0.6vmin;
+        padding: 0.7vmin 1.1vmin;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #f57c00;
-        margin-bottom: 12px;
+        margin-bottom: 1.1vmin;
         text-align: center;
         flex-shrink: 0;
       }
@@ -3359,17 +3369,17 @@
         background: rgba(100, 181, 246, 0.3);
         border-color: #64b5f6;
         color: #64b5f6;
-        box-shadow: 0 0 12px rgba(100, 181, 246, 0.4);
+        box-shadow: 0 0 1.1vmin rgba(100, 181, 246, 0.4);
       }
       
       .pac-fishing-disclaimer {
         background: rgba(255, 152, 0, 0.15);
         border: 1px solid rgba(255, 152, 0, 0.4);
-        border-radius: 6px;
-        padding: 10px 12px;
-        font-size: 11px;
+        border-radius: 0.6vmin;
+        padding: 0.9vmin 1.1vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #ffb74d;
-        margin-bottom: 12px;
+        margin-bottom: 1.1vmin;
         text-align: center;
         flex-shrink: 0;
         font-weight: 600;
@@ -3377,15 +3387,15 @@
       
       .pac-fishing-panel {
         background: #ffffff;
-        border-radius: 8px;
-        padding: 16px;
+        border-radius: 0.7vmin;
+        padding: 1.5vmin;
         color: #1a1a2e;
         flex: 1;
         overflow-y: auto;
       }
       
       .pac-fishing-section {
-        margin-bottom: 16px;
+        margin-bottom: 1.5vmin;
       }
       
       .pac-fishing-section:last-child {
@@ -3393,25 +3403,25 @@
       }
       
       .pac-fishing-title {
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         font-weight: 700;
-        margin-bottom: 10px;
+        margin-bottom: 0.9vmin;
         color: #1a1a2e;
       }
       
       .pac-fishing-rod-select {
         display: flex;
-        gap: 6px;
-        margin-bottom: 8px;
+        gap: 0.6vmin;
+        margin-bottom: 0.7vmin;
       }
       
       .pac-rod-btn {
         flex: 1;
-        padding: 8px 6px;
+        padding: 0.7vmin 0.6vmin;
         background: #f0f0f0;
         border: 2px solid #ddd;
-        border-radius: 6px;
-        font-size: 10px;
+        border-radius: 0.6vmin;
+        font-size: clamp(9px, 0.9vmin, 12px);
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s;
@@ -3449,11 +3459,11 @@
         display: flex;
         flex-direction: column;
         gap: 2px;
-        font-size: 9px;
+        font-size: clamp(9px, 0.8vmin, 11px);
         color: #888;
-        padding: 6px 8px;
+        padding: 0.6vmin 0.7vmin;
         background: #f5f5f5;
-        border-radius: 4px;
+        border-radius: 0.37vmin;
       }
       
       .pac-rod-synergy {
@@ -3463,34 +3473,34 @@
       
       .pac-fishing-odds {
         background: #f5f5f5;
-        border-radius: 6px;
-        padding: 10px;
+        border-radius: 0.6vmin;
+        padding: 0.9vmin;
       }
       
       .pac-fishing-no-rod {
         text-align: center;
         color: #999;
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-style: italic;
-        padding: 8px 0;
+        padding: 0.7vmin 0;
       }
       
       .pac-fishing-odds-table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
       }
       
       .pac-fishing-odds-table th {
         text-align: left;
-        padding: 4px 6px;
+        padding: 0.37vmin 0.6vmin;
         border-bottom: 1px solid #ddd;
         font-weight: 600;
         color: #666;
       }
       
       .pac-fishing-odds-table td {
-        padding: 4px 6px;
+        padding: 0.37vmin 0.6vmin;
         border-bottom: 1px solid #eee;
       }
       
@@ -3506,56 +3516,56 @@
       .pac-fishing-odds-table .rarity-special { color: #ff9800; font-weight: 600; }
       
       .pac-fishing-special-note {
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #ff9800;
-        margin-top: 6px;
+        margin-top: 0.6vmin;
         text-align: center;
         font-style: italic;
       }
       
       .pac-fishing-toggle-row {
-        margin-bottom: 10px;
+        margin-bottom: 0.9vmin;
       }
       
       .pac-fishing-checkbox {
         display: flex;
         align-items: center;
-        gap: 8px;
-        font-size: 11px;
+        gap: 0.7vmin;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #666;
         cursor: pointer;
       }
       
       .pac-fishing-checkbox input {
-        width: 16px;
-        height: 16px;
+        width: 1.5vmin;
+        height: 1.5vmin;
         cursor: pointer;
       }
       
       .pac-fishing-pool {
         background: #f5f5f5;
-        border-radius: 6px;
-        padding: 10px;
-        max-height: 400px;
+        border-radius: 0.6vmin;
+        padding: 0.9vmin;
+        max-height: 37.0vmin;
         overflow-y: auto;
       }
       
       .pac-fishing-pool::-webkit-scrollbar {
-        width: 6px;
+        width: 0.6vmin;
       }
       
       .pac-fishing-pool::-webkit-scrollbar-thumb {
         background: #ccc;
-        border-radius: 3px;
+        border-radius: 0.28vmin;
       }
       
       .pac-fishing-rarity-group {
-        margin-bottom: 12px;
-        padding-top: 4px;
+        margin-bottom: 1.1vmin;
+        padding-top: 0.37vmin;
       }
       
       .pac-fishing-rarity-group:first-child {
-        padding-top: 24px;
+        padding-top: 2.2vmin;
       }
       
       .pac-fishing-rarity-group:last-child {
@@ -3563,9 +3573,9 @@
       }
       
       .pac-fishing-rarity-label {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 600;
-        margin-bottom: 4px;
+        margin-bottom: 0.37vmin;
         padding-bottom: 2px;
         border-bottom: 1px solid #ddd;
       }
@@ -3578,14 +3588,14 @@
       .pac-fishing-pokemon-list {
         display: flex;
         flex-wrap: wrap;
-        gap: 6px;
+        gap: 0.6vmin;
       }
       
       .pac-fishing-pokemon {
-        font-size: 10px;
-        padding: 2px 6px;
+        font-size: clamp(9px, 0.9vmin, 12px);
+        padding: 2px 0.6vmin;
         background: #fff;
-        border-radius: 3px;
+        border-radius: 0.28vmin;
         border: 1px solid #ddd;
         color: #333;
         cursor: pointer;
@@ -3600,18 +3610,18 @@
       .pac-fishing-pokemon .pac-fish-tooltip {
         display: none;
         position: absolute;
-        bottom: calc(100% + 8px);
+        bottom: calc(100% + 0.7vmin);
         left: 50%;
         transform: translateX(-50%);
         background: #ffffff;
         color: #000000;
-        padding: 8px 12px;
-        border-radius: 6px;
-        font-size: 12px;
+        padding: 0.7vmin 1.1vmin;
+        border-radius: 0.6vmin;
+        font-size: clamp(9px, 1.1vmin, 15px);
         font-weight: 600;
         white-space: nowrap;
         z-index: 10000;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        box-shadow: 0 0.37vmin 1.1vmin rgba(0,0,0,0.4);
         pointer-events: none;
       }
       
@@ -3621,7 +3631,7 @@
         top: 100%;
         left: 50%;
         transform: translateX(-50%);
-        border: 6px solid transparent;
+        border: 0.6vmin solid transparent;
         border-top-color: #ffffff;
       }
       
@@ -3641,21 +3651,21 @@
       
       .pac-fishing-source-legend {
         display: flex;
-        gap: 12px;
-        margin-top: 8px;
-        font-size: 9px;
+        gap: 1.1vmin;
+        margin-top: 0.7vmin;
+        font-size: clamp(9px, 0.8vmin, 11px);
         color: #888;
       }
       
       .pac-fishing-source-legend span {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 0.37vmin;
       }
       
       .pac-fishing-source-legend .dot {
-        width: 8px;
-        height: 8px;
+        width: 0.7vmin;
+        height: 0.7vmin;
         border-radius: 2px;
       }
       
@@ -3672,12 +3682,12 @@
       }
       
       .pac-fishing-note {
-        margin-top: 12px;
-        padding: 8px 10px;
+        margin-top: 1.1vmin;
+        padding: 0.7vmin 0.9vmin;
         background: rgba(100, 181, 246, 0.15);
         border: 1px solid rgba(100, 181, 246, 0.3);
-        border-radius: 4px;
-        font-size: 10px;
+        border-radius: 0.37vmin;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #1976d2;
         text-align: center;
       }
@@ -3686,27 +3696,27 @@
       .pac-top-pokemon-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+        gap: 0.7vmin;
       }
       
       .pac-top-pokemon-card {
         background: #f5f5f5;
-        border-radius: 6px;
-        padding: 8px;
+        border-radius: 0.6vmin;
+        padding: 0.7vmin;
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
       
       .pac-top-pokemon-name {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 600;
         color: #1a1a2e;
       }
       
       .pac-top-pokemon-stats {
         text-align: right;
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
       }
       
       .pac-top-pokemon-seen {
@@ -3728,38 +3738,38 @@
       
       /* Wild Pokemon Section */
       .pac-wild-section {
-        padding: 8px 0;
+        padding: 0.7vmin 0;
       }
       
       .pac-wild-total {
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         color: #666;
-        margin-bottom: 10px;
-        padding: 8px 12px;
+        margin-bottom: 0.9vmin;
+        padding: 0.7vmin 1.1vmin;
         background: #f0f7f0;
-        border-radius: 6px;
-        border-left: 3px solid #4caf50;
+        border-radius: 0.6vmin;
+        border-left: 0.28vmin solid #4caf50;
       }
       
       .pac-wild-total strong {
         color: #2e7d32;
-        font-size: 14px;
+        font-size: clamp(9px, 1.3vmin, 18px);
       }
       
       .pac-wild-pokemon-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
+        gap: 0.6vmin;
       }
       
       .pac-wild-pokemon-card {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 8px 10px;
+        padding: 0.7vmin 0.9vmin;
         background: #f5f5f5;
-        border-radius: 6px;
-        border-left: 3px solid #9e9e9e;
+        border-radius: 0.6vmin;
+        border-left: 0.28vmin solid #9e9e9e;
       }
       
       .pac-wild-pokemon-card.common { border-left-color: #78909c; }
@@ -3769,39 +3779,39 @@
       .pac-wild-pokemon-card.ultra { border-left-color: #ffa726; }
       
       .pac-wild-pokemon-name {
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         font-weight: 600;
         color: #333;
         text-transform: capitalize;
       }
       
       .pac-wild-pokemon-count {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         font-weight: 700;
         color: #4caf50;
       }
       
       .pac-wild-more {
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #999;
         text-align: center;
-        margin-top: 6px;
+        margin-top: 0.6vmin;
         font-style: italic;
       }
       
       /* Ditto Section */
       .pac-ditto-section {
-        padding: 8px 0;
+        padding: 0.7vmin 0;
       }
       
       .pac-ditto-stats-card {
         display: flex;
         align-items: center;
-        gap: 16px;
-        padding: 12px 16px;
+        gap: 1.5vmin;
+        padding: 1.1vmin 1.5vmin;
         background: linear-gradient(135deg, #e8d5f2 0%, #d4b8e8 100%);
-        border-radius: 8px;
-        border-left: 4px solid #9c27b0;
+        border-radius: 0.7vmin;
+        border-left: 0.37vmin solid #9c27b0;
       }
       
       .pac-ditto-count {
@@ -3811,14 +3821,14 @@
       }
       
       .pac-ditto-number {
-        font-size: 28px;
+        font-size: clamp(19px, 2.6vmin, 36px);
         font-weight: 800;
         color: #7b1fa2;
         line-height: 1;
       }
       
       .pac-ditto-label {
-        font-size: 10px;
+        font-size: clamp(9px, 0.9vmin, 12px);
         color: #9c27b0;
         font-weight: 600;
       }
@@ -3827,24 +3837,24 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-left: 16px;
+        padding-left: 1.5vmin;
         border-left: 1px solid rgba(156, 39, 176, 0.3);
       }
       
       .pac-ditto-rate-value {
-        font-size: 18px;
+        font-size: clamp(12px, 1.7vmin, 23px);
         font-weight: 700;
         color: #7b1fa2;
       }
       
       .pac-ditto-rate-label {
-        font-size: 9px;
+        font-size: clamp(9px, 0.8vmin, 11px);
         color: #9c27b0;
       }
       
       .pac-ditto-message {
         margin-left: auto;
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         font-weight: 600;
         color: #7b1fa2;
       }
@@ -3861,17 +3871,17 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(0.9vmin);
       }
       
       #pac-eula-modal {
         background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
         border: 2px solid #0f3460;
-        border-radius: 12px;
-        max-width: 600px;
+        border-radius: 1.1vmin;
+        max-width: 55.6vmin;
         max-height: 80vh;
-        padding: 24px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+        padding: 2.2vmin;
+        box-shadow: 0 0.7vmin 3.0vmin rgba(0,0,0,0.6);
         color: #e9e9e9;
         overflow-y: auto;
         position: relative;
@@ -3879,70 +3889,70 @@
       }
       
       .pac-eula-title {
-        font-size: 20px;
+        font-size: clamp(14px, 1.9vmin, 26px);
         font-weight: 600;
-        margin-bottom: 16px;
+        margin-bottom: 1.5vmin;
         color: #64b5f6;
         text-align: center;
       }
       
       .pac-eula-content {
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         line-height: 1.6;
-        margin-bottom: 20px;
+        margin-bottom: 1.9vmin;
         color: #ccc;
       }
       
       .pac-eula-section {
-        margin-bottom: 16px;
+        margin-bottom: 1.5vmin;
       }
       
       .pac-eula-section-title {
-        font-size: 14px;
+        font-size: clamp(9px, 1.3vmin, 18px);
         font-weight: 600;
         color: #64b5f6;
-        margin-bottom: 8px;
+        margin-bottom: 0.7vmin;
       }
       
       .pac-eula-highlight {
         background: rgba(76, 175, 80, 0.2);
-        padding: 12px;
-        border-left: 3px solid #4caf50;
-        border-radius: 4px;
-        margin: 12px 0;
+        padding: 1.1vmin;
+        border-left: 0.28vmin solid #4caf50;
+        border-radius: 0.37vmin;
+        margin: 1.1vmin 0;
       }
       
       .pac-eula-warning {
         background: rgba(255, 152, 0, 0.2);
-        padding: 12px;
-        border-left: 3px solid #ff9800;
-        border-radius: 4px;
-        margin: 12px 0;
+        padding: 1.1vmin;
+        border-left: 0.28vmin solid #ff9800;
+        border-radius: 0.37vmin;
+        margin: 1.1vmin 0;
       }
       
       .pac-eula-checkboxes {
-        margin: 20px 0;
+        margin: 1.9vmin 0;
       }
       
       .pac-eula-checkbox-row {
         display: flex !important;
         align-items: flex-start !important;
-        gap: 12px !important;
-        margin-bottom: 12px !important;
-        padding: 12px !important;
+        gap: 1.1vmin !important;
+        margin-bottom: 1.1vmin !important;
+        padding: 1.1vmin !important;
         background: rgba(255,255,255,0.03) !important;
-        border-radius: 6px !important;
+        border-radius: 0.6vmin !important;
         cursor: pointer !important;
       }
       
       .pac-eula-custom-checkbox {
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
+        width: 3.0vmin !important;
+        height: 3.0vmin !important;
+        min-width: 3.0vmin !important;
+        min-height: 3.0vmin !important;
         background: #000 !important;
         border: 2px solid #4caf50 !important;
-        border-radius: 6px !important;
+        border-radius: 0.6vmin !important;
         cursor: pointer !important;
         position: relative !important;
         transition: all 0.2s !important;
@@ -3954,7 +3964,7 @@
       
       .pac-eula-custom-checkbox:hover {
         border-color: #66bb6a !important;
-        box-shadow: 0 0 8px rgba(76, 175, 80, 0.4) !important;
+        box-shadow: 0 0 0.7vmin rgba(76, 175, 80, 0.4) !important;
       }
       
       .pac-eula-custom-checkbox.checked {
@@ -3965,7 +3975,7 @@
       .pac-eula-custom-checkbox.checked::after {
         content: '✓' !important;
         color: #fff !important;
-        font-size: 24px !important;
+        font-size: clamp(16px, 2.2vmin, 30px) !important;
         font-weight: 900 !important;
         line-height: 1 !important;
         text-shadow: 
@@ -3973,24 +3983,24 @@
           1px -1px 0 #2196f3,
           -1px 1px 0 #2196f3,
           1px 1px 0 #2196f3,
-          0 0 6px #2196f3 !important;
+          0 0 0.6vmin #2196f3 !important;
       }
       
       .pac-eula-checkbox-row label {
         flex: 1;
         cursor: pointer;
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         line-height: 1.5;
       }
       
       .pac-eula-button {
         width: 100%;
-        padding: 14px;
+        padding: 1.3vmin;
         background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
         border: none;
-        border-radius: 8px;
+        border-radius: 0.7vmin;
         color: white;
-        font-size: 15px;
+        font-size: clamp(10px, 1.4vmin, 19px);
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s;
@@ -4004,7 +4014,7 @@
       
       .pac-eula-button:not(:disabled):hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+        box-shadow: 0 0.37vmin 1.1vmin rgba(76, 175, 80, 0.4);
       }
       
       /* Help Modal */
@@ -4019,17 +4029,17 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        backdrop-filter: blur(5px);
+        backdrop-filter: blur(0.46vmin);
       }
       
       #pac-help-modal {
         background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
         border: 2px solid #0f3460;
-        border-radius: 12px;
+        border-radius: 1.1vmin;
         width: 90%;
-        max-width: 700px;
+        max-width: 64.8vmin;
         max-height: 85vh;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+        box-shadow: 0 0.7vmin 3.0vmin rgba(0,0,0,0.6);
         color: #e9e9e9;
         overflow: hidden;
         display: flex;
@@ -4040,13 +4050,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 16px 20px;
+        padding: 1.5vmin 1.9vmin;
         border-bottom: 1px solid rgba(255,255,255,0.1);
         background: linear-gradient(90deg, #0f3460 0%, #533483 100%);
       }
       
       .pac-help-title {
-        font-size: 18px;
+        font-size: clamp(12px, 1.7vmin, 23px);
         font-weight: 600;
         color: #fff;
       }
@@ -4055,10 +4065,10 @@
         background: rgba(255,255,255,0.1);
         border: none;
         color: #fff;
-        font-size: 20px;
-        width: 32px;
-        height: 32px;
-        border-radius: 6px;
+        font-size: clamp(14px, 1.9vmin, 26px);
+        width: 3.0vmin;
+        height: 3.0vmin;
+        border-radius: 0.6vmin;
         cursor: pointer;
         transition: all 0.2s;
       }
@@ -4070,13 +4080,13 @@
       .pac-help-content {
         flex: 1;
         overflow-y: auto;
-        padding: 20px;
+        padding: 1.9vmin;
         scrollbar-width: thin;
         scrollbar-color: #533483 transparent;
       }
       
       .pac-help-content::-webkit-scrollbar {
-        width: 6px;
+        width: 0.6vmin;
       }
       
       .pac-help-content::-webkit-scrollbar-track {
@@ -4085,11 +4095,11 @@
       
       .pac-help-content::-webkit-scrollbar-thumb {
         background: #533483;
-        border-radius: 3px;
+        border-radius: 0.28vmin;
       }
       
       .pac-help-section {
-        margin-bottom: 24px;
+        margin-bottom: 2.2vmin;
       }
       
       .pac-help-section:last-child {
@@ -4097,24 +4107,24 @@
       }
       
       .pac-help-section-title {
-        font-size: 15px;
+        font-size: clamp(10px, 1.4vmin, 19px);
         font-weight: 600;
         color: #64b5f6;
-        margin-bottom: 12px;
+        margin-bottom: 1.1vmin;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 0.7vmin;
       }
       
       .pac-help-section-title .emoji {
-        font-size: 18px;
+        font-size: clamp(12px, 1.7vmin, 23px);
       }
       
       .pac-help-feature {
         background: rgba(255,255,255,0.05);
-        border-radius: 8px;
-        padding: 12px 14px;
-        margin-bottom: 10px;
+        border-radius: 0.7vmin;
+        padding: 1.1vmin 1.3vmin;
+        margin-bottom: 0.9vmin;
       }
       
       .pac-help-feature:last-child {
@@ -4122,35 +4132,35 @@
       }
       
       .pac-help-feature-title {
-        font-size: 13px;
+        font-size: clamp(9px, 1.2vmin, 16px);
         font-weight: 600;
         color: #4caf50;
-        margin-bottom: 6px;
+        margin-bottom: 0.6vmin;
       }
       
       .pac-help-feature-desc {
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         color: #aaa;
         line-height: 1.5;
       }
       
       .pac-help-tip {
         background: rgba(100, 181, 246, 0.15);
-        border-left: 3px solid #64b5f6;
-        padding: 10px 12px;
-        border-radius: 0 6px 6px 0;
-        margin-bottom: 10px;
+        border-left: 0.28vmin solid #64b5f6;
+        padding: 0.9vmin 1.1vmin;
+        border-radius: 0 0.6vmin 0.6vmin 0;
+        margin-bottom: 0.9vmin;
       }
       
       .pac-help-tip-title {
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         font-weight: 600;
         color: #64b5f6;
-        margin-bottom: 4px;
+        margin-bottom: 0.37vmin;
       }
       
       .pac-help-tip-text {
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #aaa;
         line-height: 1.4;
       }
@@ -4159,32 +4169,32 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 8px 12px;
+        padding: 0.7vmin 1.1vmin;
         background: rgba(255,255,255,0.05);
-        border-radius: 6px;
-        margin-bottom: 6px;
+        border-radius: 0.6vmin;
+        margin-bottom: 0.6vmin;
       }
       
       .pac-help-shortcut-key {
         background: #333;
-        padding: 4px 10px;
-        border-radius: 4px;
+        padding: 0.37vmin 0.9vmin;
+        border-radius: 0.37vmin;
         font-family: monospace;
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         color: #64b5f6;
         border: 1px solid #555;
       }
       
       .pac-help-shortcut-desc {
-        font-size: 12px;
+        font-size: clamp(9px, 1.1vmin, 15px);
         color: #ccc;
       }
       
       .pac-help-version {
         text-align: center;
-        padding: 16px;
+        padding: 1.5vmin;
         border-top: 1px solid rgba(255,255,255,0.1);
-        font-size: 11px;
+        font-size: clamp(9px, 1.0vmin, 14px);
         color: #666;
       }
       
