@@ -2,26 +2,36 @@
   "manifest_version": 3,
   "name": "Pokemon Auto Chess Live Data Calculator",
   "version": "3.2.2",
-  "description": "Real-time probability calculator for Pokémon Auto Chess",
+  "description": "Real-time probability calculator for Pokemon Auto Chess",
   "author": "Galliano Games",
-  
+
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
-  
+
   "content_scripts": [
     {
       "matches": [
         "*://*.pokemon-auto-chess.com/*",
         "*://pokemon-auto-chess.com/*"
       ],
-      "js": ["content/overlay.js"],
+      "js": [
+        "content/namespace.js",
+        "content/data/constants.js",
+        "content/data/pokemon.js",
+        "content/data/evolutions.js",
+        "content/utils/pokemon.js",
+        "content/core/state.js",
+        "content/core/calculator.js",
+        "content/ui/overlay-ui.js",
+        "content/main.js"
+      ],
       "run_at": "document_idle"
     }
   ],
-  
+
   "web_accessible_resources": [
     {
       "resources": ["content/extractor.js"],
