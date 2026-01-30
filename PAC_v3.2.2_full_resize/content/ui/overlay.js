@@ -69,6 +69,212 @@
   // Debug mode
   var DEBUG_MODE = PAC.DEBUG_MODE;
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ROOM EXTRACTION (via page context injection)
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function injectExtractor() {
+    // Inject into page context to access game state
+    var script = document.createElement('script');
+    script.src = chrome.runtime.getURL('content/extractor.js');
+    script.onload = function() {
+      if (DEBUG_MODE) console.log('🎮 PAC Calculator: Extractor loaded');
+      this.remove();
+    };
+    script.onerror = function() {
+      console.error('🎮 PAC Calculator: Failed to load extractor');
+    };
+    (document.head || document.documentElement).appendChild(script);
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // POKEMON AUTOCOMPLETE COMPONENT
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function setupAutocomplete() {
+    var input = document.getElementById('pacTargetPokemon');
+    var dropdown = document.getElementById('pacAutocompleteDropdown');
+    var errorMsg = document.getElementById('pacRarityError');
+
+    var selectedPokemon = null;
+    var debounceTimer; // OPTIMIZATION: Debounce timer
+
+    // Filter on input WITH DEBOUNCE
+    input.addEventListener('input', function(e) {
+      clearTimeout(debounceTimer);
+
+      debounceTimer = setTimeout(function() {
+        var query = e.target.value.toUpperCase().trim();
+
+        if (query.length < 2) {
+          dropdown.classList.add('hidden');
+          errorMsg.classList.add('hidden');
+          return;
+        }
+
+        // Filter matches
+        var matches = Object.entries(POKEMON_DATA)
+          .filter(function(entry) { return entry[0].includes(query); })
+          .slice(0, 15); // Limit to 15 results
+
+        if (matches.length === 0) {
+          dropdown.classList.add('hidden');
+          errorMsg.textContent = 'No pokemon found matching "' + query + '"';
+          errorMsg.classList.remove('hidden');
+          return;
+        }
+
+        // Build dropdown
+        dropdown.innerHTML = matches
+          .map(function(entry) {
+            var name = entry[0];
+            var data = entry[1];
+            var rarity = data.rarity || 'common';
+            var info = RARITY_INFO[rarity] || { label: rarity, color: '#666' };
+            var baseForm = getBaseForm(name);
+            var isEvolved = baseForm !== name;
+            var evolutionText = isEvolved ? ' <span style="color: #64b5f6; font-size: 10px;">(\u2190 ' + baseForm + ')</span>' : '';
+            return '<div class="pac-dropdown-item" data-name="' + name + '" data-rarity="' + rarity + '" data-baseform="' + baseForm + '">' +
+              '<span class="pac-pokemon-name">' + name + evolutionText + '</span>' +
+              '<span class="pac-pokemon-rarity" style="background: ' + info.color + '; color: ' + (rarity === 'legendary' || rarity === 'uncommon' ? '#000' : '#fff') + '">' + info.label + '</span>' +
+            '</div>';
+          }).join('');
+
+        dropdown.classList.remove('hidden');
+        errorMsg.classList.add('hidden');
+
+        // Position dropdown to the right of the selector container
+        var selectorRect = input.closest('.pac-pokemon-selector').getBoundingClientRect();
+        var panelRect = document.getElementById('pac-calc-overlay').getBoundingClientRect();
+        dropdown.style.top = selectorRect.top + 'px';
+        dropdown.style.left = (panelRect.right + 8) + 'px';
+        dropdown.style.maxHeight = Math.min(400, window.innerHeight - selectorRect.top - 20) + 'px';
+      }, 100); // OPTIMIZATION: 100ms delay - imperceptible to user
+    });
+
+    // Use event delegation for dropdown clicks (outside input handler to avoid duplicates)
+    dropdown.addEventListener('click', function(e) {
+      var item = e.target.closest('.pac-dropdown-item');
+      if (item) {
+        selectPokemon(item);
+      }
+    });
+
+    // Selection handler
+    function selectPokemon(item) {
+      var name = item.dataset.name;
+      var rarity = item.dataset.rarity;
+      var baseForm = item.dataset.baseform || name;
+
+      // Check if rarity is in pool
+      if (!POOL_RARITIES.includes(rarity)) {
+        errorMsg.textContent = name + ' is ' + RARITY_INFO[rarity].label + ' - not available in shop pools';
+        errorMsg.classList.remove('hidden');
+        input.value = '';
+        state.targetPokemon = '';
+        state.targetPokemonDisplayName = '';
+        state.evolutionFamily = [];
+        state.targetIsWild = false;
+        var wildCheckbox = document.getElementById('pacTargetWild');
+        if (wildCheckbox) wildCheckbox.checked = false;
+        selectedPokemon = null;
+        // Hide portal warning
+        var portalWarning = document.getElementById('pacPortalWarning');
+        if (portalWarning) portalWarning.style.display = 'none';
+        dropdown.classList.add('hidden');
+        return;
+      }
+
+      // Clear previous evolution family display
+      var familySection = document.getElementById('pacEvolutionFamily');
+      if (familySection) {
+        familySection.classList.add('hidden');
+      }
+
+      // Auto-adjust rarity if different
+      if (rarity !== state.targetRarity) {
+        state.targetRarity = rarity;
+        document.getElementById('pacRarity').value = rarity;
+      }
+
+      // Auto-adjust evolution stars based on maxStars from EVOLUTION_CHAINS
+      var evolutionChain = EVOLUTION_CHAINS[baseForm];
+      if (evolutionChain && evolutionChain[0] && evolutionChain[0].maxStars) {
+        var targetEvoStars = evolutionChain[0].maxStars;
+        // Set the dropdown value to "twoStar" or "threeStar"
+        var evoValue = targetEvoStars === 3 ? 'threeStar' : 'twoStar';
+        state.targetEvo = evoValue;
+        document.getElementById('pacEvo').value = evoValue;
+        if (DEBUG_MODE) console.log('🌟 Auto-set evolution to ' + targetEvoStars + '★ (max for ' + baseForm + ')');
+      }
+
+      // Valid selection - store base form and evolution family
+      input.value = name;
+      state.targetPokemon = baseForm;  // Store BASE FORM for tracking
+      state.targetPokemonDisplayName = name;  // What user searched
+      state.targetPokemonRarity = rarity;
+      state.evolutionFamily = getEvolutionFamily(baseForm);  // Cache family
+      selectedPokemon = { name: name, rarity: rarity, baseForm: baseForm };
+
+      // Auto-detect wild Pokemon
+      var isWild = isWildPokemon(baseForm);
+      state.targetIsWild = isWild;
+      var wildCheckbox = document.getElementById('pacTargetWild');
+      if (wildCheckbox) {
+        wildCheckbox.checked = isWild;
+      }
+
+      if (DEBUG_MODE) console.log('🎯 Selected:', { name: name, baseForm: baseForm, family: state.evolutionFamily, isWild: isWild });
+
+      // Check portal/regional availability
+      updateAvailabilityWarnings();
+
+      dropdown.classList.add('hidden');
+      errorMsg.classList.add('hidden');
+      updateDisplay();
+    }
+
+    // Clear selection if rarity changes
+    document.getElementById('pacRarity').addEventListener('change', function() {
+      if (selectedPokemon && selectedPokemon.rarity !== state.targetRarity) {
+        input.value = '';
+        state.targetPokemon = '';
+        state.targetPokemonRarity = null;
+        state.targetIsWild = false;
+        var wildCheckbox = document.getElementById('pacTargetWild');
+        if (wildCheckbox) wildCheckbox.checked = false;
+        var rarityLabel = RARITY_INFO[state.targetRarity].label;
+        errorMsg.textContent = selectedPokemon ? selectedPokemon.name + ' is not a ' + rarityLabel + ' pokemon' : '';
+        if (selectedPokemon) errorMsg.classList.remove('hidden');
+        selectedPokemon = null;
+      }
+    });
+
+    // Close dropdown on outside click
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.pac-pokemon-selector')) {
+        dropdown.classList.add('hidden');
+      }
+    });
+
+    // Allow clearing with backspace
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Backspace' && input.value.length === 0) {
+        state.targetPokemon = '';
+        state.targetPokemonRarity = null;
+        state.targetIsWild = false;
+        var wildCheckbox = document.getElementById('pacTargetWild');
+        if (wildCheckbox) wildCheckbox.checked = false;
+        selectedPokemon = null;
+        errorMsg.classList.add('hidden');
+      }
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // UI CREATION
+  // ═══════════════════════════════════════════════════════════════════════════
+
   function createOverlay() {
     // Inject CSS from styles module
     PAC.UI.injectStyles();
