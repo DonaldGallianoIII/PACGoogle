@@ -12,7 +12,7 @@
 
   // Version info
   PAC.VERSION = '3.2.2';
-  PAC.DEBUG_MODE = false;
+  PAC.DEBUG_MODE = true;  // Enable for troubleshooting
 
   // Sub-namespaces for organization
   PAC.Data = {};       // Pokemon data, evolution chains, constants
