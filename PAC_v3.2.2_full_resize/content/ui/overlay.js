@@ -1086,10 +1086,17 @@
     if (saved) {
       const pos = JSON.parse(saved);
       const overlay = document.getElementById('pac-calc-overlay');
-      overlay.style.left = pos.left + 'px';
-      overlay.style.top = pos.top + 'px';
+
+      // Bounds check - ensure overlay stays on screen
+      const maxLeft = window.innerWidth - 100;
+      const maxTop = window.innerHeight - 100;
+      const safeLeft = Math.max(0, Math.min(pos.left || 0, maxLeft));
+      const safeTop = Math.max(0, Math.min(pos.top || 0, maxTop));
+
+      overlay.style.left = safeLeft + 'px';
+      overlay.style.top = safeTop + 'px';
       overlay.style.right = 'auto';
-      
+
       // Load saved dimensions
       if (pos.width && pos.width >= 280 && pos.width <= 600) {
         overlay.style.width = pos.width + 'px';
@@ -1101,6 +1108,8 @@
       if (pos.height && pos.height >= 200) {
         overlay.style.height = pos.height + 'px';
       }
+
+      if (DEBUG_MODE) console.log('📍 Loaded position:', { left: safeLeft, top: safeTop });
     }
   }
 
