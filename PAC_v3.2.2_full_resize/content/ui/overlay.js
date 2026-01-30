@@ -8134,7 +8134,14 @@
   }
 
   // Wait for page to be ready
+  var hasStarted = false;  // Guard against double-initialization
+
   async function start() {
+    if (hasStarted) {
+      if (DEBUG_MODE) console.log('⚠️ PAC Calculator already started, skipping');
+      return;
+    }
+    hasStarted = true;
     if (DEBUG_MODE) console.log('🚀 PAC Calculator starting...');
     
     // Inject CSS FIRST (before EULA so it's styled properly)

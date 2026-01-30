@@ -12,14 +12,8 @@
     return;
   }
 
-  // Start the application
-  if (PAC.UI.start) {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', PAC.UI.start);
-    } else {
-      setTimeout(PAC.UI.start, 500);
-    }
-  }
+  // Note: overlay.js auto-starts the application
+  // This file just verifies modules and exposes debug interface
 
   // Expose for debugging
   window.__PACCalc = {
