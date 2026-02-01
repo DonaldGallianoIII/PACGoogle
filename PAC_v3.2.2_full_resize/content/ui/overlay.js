@@ -1100,10 +1100,6 @@
       // Load saved dimensions
       if (pos.width && pos.width >= 280 && pos.width <= 600) {
         overlay.style.width = pos.width + 'px';
-        // Hide side panels if not at default width
-        if (Math.abs(pos.width - 380) > 10) {
-          overlay.classList.add('width-resized');
-        }
       }
       if (pos.height && pos.height >= 200) {
         overlay.style.height = pos.height + 'px';

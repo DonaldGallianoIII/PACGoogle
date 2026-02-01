@@ -40,13 +40,7 @@
         min-width: 25.9vmin;
         max-width: 55.6vmin;
       }
-      
-      /* Hide side panels when width is not default */
-      #pac-calc-overlay.width-resized .pac-team-panel,
-      #pac-calc-overlay.width-resized .pac-team-toggle {
-        display: none !important;
-      }
-      
+
       /* Hide scrollbar */
       #pac-calc-body {
         scrollbar-width: none;
