@@ -8153,10 +8153,10 @@
     hasStarted = true;
     if (DEBUG_MODE) console.log('🚀 PAC Calculator starting...');
     
-    // Inject CSS FIRST (before EULA so it's styled properly)
-    if (!document.getElementById('pac-calc-styles')) {
+    // Inject EULA CSS FIRST (before EULA so it's styled properly)
+    if (!document.getElementById('pac-eula-styles')) {
       const style = document.createElement('style');
-      style.id = 'pac-calc-styles';
+      style.id = 'pac-eula-styles';
       style.textContent = `
         /* Copy all CSS from createOverlay here - just the EULA part for now */
         #pac-eula-overlay {
